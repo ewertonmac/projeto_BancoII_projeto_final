@@ -22,7 +22,15 @@ a, a:visited, a:hover {
     --text: #777272;
 }
 
+html,body{
+    min-height:100%;
+    position: relative;
+}
+
 body {
+
+    padding: 0;
+    margin: 0;
     font-size: 20px;
     font-family: 'Nunito', sans-serif;
     background-color: #fcfcfc;
@@ -73,8 +81,17 @@ body {
     transform: scale(105%);
 }
 
+.img-top {
+    height:20rem;
+    width:35%;
+}
+
 .container-login {
     display: block;
     margin: 30px auto;
     width: 50%;
+}
+.container-sobre{
+    min-height:40rem;
+
 }
