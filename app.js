@@ -6,7 +6,7 @@ require('dotenv').config();
 
 // configurações
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 const app = express();
 
 // view e template engine
@@ -34,6 +34,14 @@ app.get('/login', (req, res) => {
 
 app.get('/signup', (req, res) => {
     res.status(200).render('signup');
+});
+
+app.get('/sobre', (req, res) => {
+    res.status(200).render('sobre');
+});
+
+app.get('/eventos', (req, res) => {
+    res.status(200).render('eventos');
 });
 
 app.use((req, res) => {
