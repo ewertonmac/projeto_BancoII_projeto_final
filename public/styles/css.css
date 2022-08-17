@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* fonte importada */
+
+a, a:visited, a:hover {
+    text-decoration: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
+
+:root {
+    --dark-blue: #023E8A;
+    --blue-1: #0077B6;
+    --blue-2: #0096C7;
+    --blue-3: #00B4D8;
+    --blue-4: #48CAE4;
+    --blue-5: #CAF0F8;
+    --text: #777272;
+}
+
+body {
+    font-size: 20px;
+    font-family: 'Nunito', sans-serif;
+    background-color: #fcfcfc;
+}
+
+.img-logo{
+   margin-right:2px;
+   float: left;
+   height:50px;
+   
+  
+}
+
+#site-header {
+    display: flex;
+    color: var(--blue-2);
+    border-bottom: 1px solid #eeecec;
+    background-color: white;
+    max-width: 100%;
+    font-size: 1.1rem;
+}
+
+
+
+#site-footer {
+    bottom:0px;
+    left:0;
+    max-width: 100%;
+    background-color: var(--dark-blue);
+    color: white;
+    font-weight: 100;
+    font-size: 1rem;
+}
+
+
+#signup-button {
+    color: white;
+    margin-left:3px;
+}
+
+.home-cards {
+    margin-top: 20px;
+   
+}
+
+.home-cards:hover {
+    transition: 200ms ease-in-out;
+    transform: scale(105%);
+}
+
+.container-login {
+    display: block;
+    margin: 30px auto;
+    width: 50%;
+}
