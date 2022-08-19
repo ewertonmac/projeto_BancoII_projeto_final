@@ -4,6 +4,9 @@ const handlebars = require('express-handlebars');
 const path = require('path');
 require('dotenv').config();
 
+// importações dos routes
+const apiRoutes = require('./routes');
+
 // configurações
 
 const port = process.env.PORT || 3002;
@@ -23,6 +26,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 
 // rotas e middlewares
+
+//adicionar middleware para controle de rotas / verificar se o usuário está logado
+app.use('/api', apiRoutes);
 
 app.get('/', (req, res) => {
     res.status(200).render('index');
