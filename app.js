@@ -44,6 +44,14 @@ app.get('/eventos', (req, res) => {
     res.status(200).render('eventos');
 });
 
+app.get('/editar', (req, res) => {
+    res.status(200).render('editar');
+});
+
+app.get('/usuario', (req, res) => {
+    res.status(200).render('usuario');
+});
+
 app.use((req, res) => {
     res.status(400).send("Not Found");
 });port
