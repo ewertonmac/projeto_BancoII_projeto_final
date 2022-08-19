@@ -1,6 +1,6 @@
 {
-  "name": "eventos_academicos",
-  "version": "1.0.0",
+  "name": "even4",
+  "version": "1.2.0",
   "description": "Plataforma de divulgação e inscrição em eventos acadêmicos. ",
   "main": "app.js",
   "scripts": {
