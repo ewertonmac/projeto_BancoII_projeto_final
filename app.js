@@ -52,6 +52,11 @@ app.get('/usuario', (req, res) => {
     res.status(200).render('usuario');
 });
 
+app.get('/evento/:id', (req, res) => {
+    res.status(200).render('detalhes');
+})
+
+
 app.use((req, res) => {
     res.status(400).send("Not Found");
 });port
