@@ -1,23 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
-const palestranteController = require('./controllers/palestranteController');
-const ouvinteController = require('./controllers/ouvinteController');
+const usuarioController = require('./controllers/usuarioController');
+const eventoController = require('./controllers/eventoController');
 
-//palestrante routes
-router.get('/palestrantes', palestranteController.listar);
-router.get('/palestrante/:id', palestranteController.listarPorId);
-router.get('/palestrante/email/:email', palestranteController.listarPorEmail);
-router.post('/palestrante', palestranteController.cadastrar);
-router.put('/palestrante/:id', palestranteController.atualizar);
-router.delete('/palestrante/:id', palestranteController.deletar);
+//usuario routes
+router.get('/usuarios', usuarioController.listar);
+router.get('/usuario/:id', usuarioController.listarPorId);
+router.get('/usuario/email/:email', usuarioController.listarPorEmail);
+router.post('/usuario', usuarioController.cadastrar);
+router.put('/usuario/:id', usuarioController.atualizar);
+router.delete('/usuario/:id', usuarioController.deletar);
 
-//ouvinte routes
-router.get('/ouvintes', ouvinteController.listar);
-router.get('/ouvinte/:id', ouvinteController.listarPorId);
-router.get('/ouvinte/email/:email', ouvinteController.listarPorEmail);
-router.post('/ouvinte', ouvinteController.cadastrar);
-router.put('/ouvinte/:id', ouvinteController.atualizar);
-router.delete('/ouvinte/:id', ouvinteController.deletar);
+//evento routes
+router.get('/eventos', eventoController.listar);
+router.get('/eventos/proximos/:quantidade', eventoController.proximosEventos);
+router.get('/evento/:id', eventoController.listarPorId);
+router.get('/evento/email/:email', eventoController.listarPorEmailPalestrante);
+router.post('/evento', eventoController.cadastrar);
+router.put('/evento/inscrever/:id', eventoController.inscreverOuvinte);
+router.put('/evento/:id', eventoController.atualizar);
+router.delete('/evento/:id', eventoController.deletar);
 
 module.exports = router;
