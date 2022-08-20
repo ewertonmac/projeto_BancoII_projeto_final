@@ -5,7 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 // importações dos routes
-const apiRoutes = require('./routes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
 
 // configurações
 
@@ -28,7 +28,6 @@ app.use(express.json());
 // rotas e middlewares
 
 //adicionar middleware para controle de rotas / verificar se o usuário está logado
-app.use('/api', apiRoutes);
 
 app.get('/', (req, res) => {
     res.status(200).render('index');
@@ -54,18 +53,19 @@ app.get('/editar', (req, res) => {
     res.status(200).render('editar');
 });
 
-app.get('/usuario', (req, res) => {
-    res.status(200).render('usuario');
-});
-
 app.get('/evento/:id', (req, res) => {
     res.status(200).render('detalhes');
 })
 
+// rotas do usuário
+
+app.post('/usuario', usuarioRoutes.cadastrarUsuario);
 
 app.use((req, res) => {
     res.status(400).send("Not Found");
 });port
+
+
 
 // server
 
