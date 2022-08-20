@@ -1,6 +1,7 @@
 const Usuario = require('../model/usuario');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const listar = (req, res) => {
     Usuario.find()
@@ -57,17 +58,48 @@ const cadastrar = async (req, res) => {
     novoUsuario.senha = hashedSenha;
 
     try {
-        novoUsuario.save().then(() => { 
+        usuario = novoUsuario.save().then(() => {
             res.status(201).redirect('/');
         }).catch(e => {
-            if(e.code === 11000) {
+            if (e.code === 11000) {
                 res.status(400).json({ "status": 400, "conteudo": "usuário já cadastrado" });
             }
         });
     } catch (e) {
-        res.status(500).json({"status": 500, "mensagem": e.message});
+        res.status(500).json({ "status": 500, "mensagem": e.message });
     };
 
+}
+
+const login = async (req, res) => {
+    let usuario = null;
+    let senhaValida = null;
+    try {
+        usuario = await Usuario.findOne({
+            where: {
+                email: req.body.email
+            }
+        });
+        senhaValida = await bcrypt.compare(req.body.senha, usuario.senha);
+    } catch (e) {
+        res.status(500).json({ message: e.message });
+    };
+
+    const message = 'E-mail ou senha inválidos!';
+
+    if (usuario === null) {
+        res.status(400).json({ message: message });
+    }
+
+
+    if (!senhaValida) {
+        res.status(400).json({ message: message });
+    }
+    const token = jwt.sign({ id: usuario.id }, process.env.TOKEN_SECRET, { expiresIn: 1800 });
+    // O que fazer
+    // A partir
+    // de agora?
+    //res.status(200).header("Auth-Token", token).redirect('/');
 }
 
 const atualizar = (req, res) => {
@@ -95,4 +127,4 @@ const deletar = (req, res) => {
         })
 }
 
-module.exports = { listar, listarPorId, listarPorEmail, cadastrar, atualizar, deletar }
+module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar }

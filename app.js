@@ -2,6 +2,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 // importações dos routes
@@ -25,6 +26,7 @@ app.engine('.hbs', handlebars.engine({
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
 
 // rotas e middlewares
 
@@ -59,6 +61,8 @@ app.get('/evento/:id', (req, res) => {
 })
 
 // rotas do usuário
+
+app.post('/login', usuarioRoutes.logarUsuario);
 
 app.post('/usuario', usuarioRoutes.cadastrarUsuario);
 

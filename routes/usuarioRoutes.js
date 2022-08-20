@@ -8,6 +8,7 @@ module.exports = {
     listarPorId: router.get('/usuario/:id', usuario.listarPorId),
     listarPorEmail: router.get('/usuario/email/:email', usuario.listarPorEmail),
     cadastrarUsuario: router.post('/usuario', usuario.cadastrar),
+    logarUsuario: router.post('/login', usuario.login),
     atualizarUsuario: router.put('/usuario/:id', usuario.atualizar),
     deletarUsuario: router.delete('/usuario/:id', usuario.deletar)
 }
