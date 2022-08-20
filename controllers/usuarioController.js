@@ -1,4 +1,6 @@
 const Usuario = require('../model/usuario');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const listar = (req, res) => {
     Usuario.find()
@@ -36,18 +38,36 @@ const listarPorEmail = (req, res) => {
         });
 }
 
-const cadastrar = (req, res) => {
-    const usuario = new Usuario(req.body);
-    usuario.save()
-        .then(() => {
-            return res.status(201).redirect('/');
-        })
-        .catch(err => {
-            if (err.code === 11000) {
-                return res.status(400).json({ "status": 400, "conteudo": "usuário já cadastrado" });
-            }
-            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+const cadastrar = async (req, res) => {
+    let usuario = null;
+    try {
+        usuario = Usuario.findOne({
+            email: req.body.email
         });
+
+    } catch (erro) {
+        res.json({ mensagemErro: erro.message });
+    }
+
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedSenha = await bcrypt.hash(req.body.senha, salt);
+
+    const novoUsuario = new Usuario(Object.assign({}, req.body));
+    novoUsuario.senha = hashedSenha;
+
+    try {
+        novoUsuario.save().then(() => { 
+            res.status(201).redirect('/');
+        }).catch(e => {
+            if(e.code === 11000) {
+                res.status(400).json({ "status": 400, "conteudo": "usuário já cadastrado" });
+            }
+        });
+    } catch (e) {
+        res.status(500).json({"status": 500, "mensagem": e.message});
+    };
+
 }
 
 const atualizar = (req, res) => {
