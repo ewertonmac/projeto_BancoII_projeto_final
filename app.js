@@ -24,6 +24,7 @@ app.engine('.hbs', handlebars.engine({
 // outras configs
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 // rotas e middlewares
 

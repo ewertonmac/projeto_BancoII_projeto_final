@@ -1,29 +1,29 @@
 <div class="container-login">
-    <form>
+    <form method="POST" action="/usuario">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Nome:</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="input-nome" class="form-label">Nome:</label>
+            <input type="text" name="nome" class="form-control" id="input-nome">
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Sobrenome:</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="input-sobrenome" class="form-label">Sobrenome:</label>
+            <input type="text" name="sobrenome" class="form-control" id="input-sobrenome">
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">E-mail:</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="input-email"  class="form-label">E-mail:</label>
+            <input type="email" name="email" class="form-control" id="input-email">
             <div id="emailHelp" class="form-text">Exemplo: usuario@dominio.com</div>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Senha:</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="input-senha"  class="form-label">Senha:</label>
+            <input type="password" name="senha" class="form-control" id="input-senha">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Repita a senha:</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="input-repetir-senha" class="form-label">Repita a senha:</label>
+            <input type="password" class="form-control" id="input-repetir-senha">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Você é:</label>
-            <select class="form-select" aria-label="Default select example">
+            <label for="select-status" class="form-label">Você é:</label>
+            <select class="form-select" name="status" id="select-status">
                 <option value="estudante">Estudante</option>
                 <option value="professor">Professor</option>
             </select>

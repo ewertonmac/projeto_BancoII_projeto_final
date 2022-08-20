@@ -40,7 +40,7 @@ const cadastrar = (req, res) => {
     const usuario = new Usuario(req.body);
     usuario.save()
         .then(() => {
-            return res.status(201).json({ "status": 201, "conteudo": "usuário cadastrado com sucesso" });
+            return res.status(201).redirect('/');
         })
         .catch(err => {
             if (err.code === 11000) {
