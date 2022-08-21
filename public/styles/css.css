@@ -97,3 +97,22 @@ body {
     min-height:40rem;
 
 }
+
+.social:hover{
+    box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.702);
+    scale:110%;
+}
+
+.card-dev:hover{
+    box-shadow: 0 0 20px 1px;
+    scale:110%;
+}
+
+.dev{
+    text-align: center;
+}
+
+.titulo{
+    text-align: center;
+    padding-top:20px;
+}
