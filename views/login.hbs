@@ -1,5 +1,5 @@
 <div class="container-login">
-    <form method="POST" action="/login">
+    <form method="POST" action="/auth/login">
         <div class="mb-3">
             <label for="email" class="form-label">Usuário ou e-mail:</label>
             <input type="email" class="form-control" name="email" id="login-email" required>
@@ -9,6 +9,6 @@
             <input type="password" class="form-control" name="senha" id="senha" required>
         </div>
         <input type="submit" value="Entrar" class="btn btn-primary">    
-       <br> Não tem uma conta? <a href="/signup">Criar conta</a>.
+       <br> Não tem uma conta? <a href="/auth/signup">Criar conta</a>.
     </form>
 </div>

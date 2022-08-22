@@ -7,6 +7,8 @@ require('dotenv').config();
 
 // importações dos routes
 const usuarioRoutes = require('./routes/usuarioRoutes');
+const autenticacaoRoutes = require('./routes/autenticacao');
+const paginasRoutes = require('./routes/paginasRoutes');
 
 // configurações
 
@@ -30,47 +32,23 @@ app.use(cookieParser());
 
 // rotas e middlewares
 
-//adicionar middleware para controle de rotas / verificar se o usuário está logado
 
-app.get('/', (req, res) => {
-    res.status(200).render('index');
-});
+// páginas
 
-app.get('/login', (req, res) => {
-    res.status(200).render('login');
-});
+app.all('/*', paginasRoutes);
 
-app.get('/signup', (req, res) => {
-    res.status(200).render('signup');
-});
+// autenticação
 
-app.get('/sobre', (req, res) => {
-    res.status(200).render('sobre');
-});
+app.all('/auth/*', autenticacaoRoutes);
 
-app.get('/eventos', (req, res) => {
-    res.status(200).render('eventos');
-});
-
-app.get('/editar', (req, res) => {
-    res.status(200).render('editar');
-});
-
-app.get('/evento/:id', (req, res) => {
-    res.status(200).render('detalhes');
-})
 
 // rotas do usuário
 
-app.post('/login', usuarioRoutes.logarUsuario);
 
-app.post('/usuario', usuarioRoutes.cadastrarUsuario);
 
 app.use((req, res) => {
     res.status(400).send("Not Found");
-});port
-
-
+});
 
 // server
 

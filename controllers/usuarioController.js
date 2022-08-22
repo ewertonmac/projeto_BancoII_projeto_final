@@ -72,34 +72,31 @@ const cadastrar = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    let usuario = null;
-    let senhaValida = null;
-    try {
-        usuario = await Usuario.findOne({
-            where: {
-                email: req.body.email
-            }
-        });
-        senhaValida = await bcrypt.compare(req.body.senha, usuario.senha);
-    } catch (e) {
-        res.status(500).json({ message: e.message });
-    };
+    
+    const usuario = await Usuario.findOne({
+        email: req.body.email
+    });
 
-    const message = 'E-mail ou senha inválidos!';
-
-    if (usuario === null) {
-        res.status(400).json({ message: message });
+    if(usuario === null) {
+        res.status(401).send('Não autorizado!');
     }
 
+    bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
+        if(err) {
+            res.status(401).send('Não autorizado!');
+        }
+        if(result) {
+            const token = jwt.sign({
+                id: usuario.id,
+                email: usuario.email
+            }, process.env.TOKEN_SECRET);
 
-    if (!senhaValida) {
-        res.status(400).json({ message: message });
-    }
-    const token = jwt.sign({ id: usuario.id }, process.env.TOKEN_SECRET, { expiresIn: 1800 });
-    // O que fazer
-    // A partir
-    // de agora?
-    //res.status(200).header("Auth-Token", token).redirect('/');
+            return res.status(200).send({email: usuario.email, token: token});
+
+        }
+        res.status(401).send('Falha na autenticação!');
+    });
+
 }
 
 const atualizar = (req, res) => {
