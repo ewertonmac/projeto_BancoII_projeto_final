@@ -11,6 +11,7 @@ router.get('/usuario/email/:email', usuarioController.listarPorEmail);
 router.post('/usuario', usuarioController.cadastrar);
 router.put('/usuario/:id', usuarioController.atualizar);
 router.delete('/usuario/:id', usuarioController.deletar);
+//router.post('/usuario/auth', usuarioController.aut);
 
 //evento routes
 router.get('/eventos', eventoController.listar);

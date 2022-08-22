@@ -24,7 +24,9 @@ app.engine('.hbs', handlebars.engine({
 // outras configs
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({
+    extended: false
+}));
 
 // rotas e middlewares
 
@@ -60,11 +62,12 @@ app.get('/evento/:id', (req, res) => {
 
 // rotas do usuário
 
-app.post('/usuario', usuarioRoutes.cadastrarUsuario);
+app.use('/usuario', usuarioRoutes);
 
 app.use((req, res) => {
     res.status(400).send("Not Found");
-});port
+});
+port
 
 
 
