@@ -1,8 +1,13 @@
 const Usuario = require('../model/usuario');
 const bcrypt = require('bcrypt');
+<<<<<<< HEAD
 const {
     sign
 } = require('jsonwebtoken');
+=======
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+>>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
 
 const listar = (req, res) => {
     Usuario.find()
@@ -81,6 +86,7 @@ const cadastrar = async (req, res) => {
     novoUsuario.senha = hashedSenha;
 
     try {
+<<<<<<< HEAD
         novoUsuario.save().then(() => {
             res.status(201).redirect('/');
         }).catch(e => {
@@ -96,7 +102,48 @@ const cadastrar = async (req, res) => {
             "status": 500,
             "mensagem": e.message
         });
+=======
+        usuario = novoUsuario.save().then(() => {
+            res.status(201).redirect('/');
+        }).catch(e => {
+            if (e.code === 11000) {
+                res.status(400).json({ "status": 400, "conteudo": "usuário já cadastrado" });
+            }
+        });
+    } catch (e) {
+        res.status(500).json({ "status": 500, "mensagem": e.message });
+>>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
     };
+
+}
+
+const login = async (req, res) => {
+
+    const usuario = await Usuario.findOne({
+        email: req.body.email
+    });
+
+    if (usuario === null) {
+        req.flash('Não autorizado')
+        res.status(401).redirect('/auth/login');
+    }
+
+
+    bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
+        if (err) {
+            res.status(401).send('Não autorizado!');
+        }
+        if (result) {
+            const token = jwt.sign({
+                id: usuario.id,
+                email: usuario.email
+            }, process.env.TOKEN_SECRET);
+
+            res.status(200).redirect('/');
+
+        }
+    });
+
 
 }
 
@@ -144,6 +191,7 @@ const deletar = (req, res) => {
         })
 }
 
+<<<<<<< HEAD
 
 const aut = async (req, res) => {
     console.log(req.body);
@@ -200,3 +248,6 @@ module.exports = {
     deletar,
     aut
 }
+=======
+module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar }
+>>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d

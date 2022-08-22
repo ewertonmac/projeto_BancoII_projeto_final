@@ -1,11 +1,17 @@
 // importações das dependências
 const express = require('express');
+const flash = require('connect-flash');
 const handlebars = require('express-handlebars');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const session = require("express-session");
+const passport = require("passport");
 require('dotenv').config();
 
 // importações dos routes
 const usuarioRoutes = require('./routes/usuarioRoutes');
+const autenticacaoRoutes = require('./routes/autenticacao');
+const paginasRoutes = require('./routes/paginasRoutes');
 
 // configurações
 
@@ -24,44 +30,39 @@ app.engine('.hbs', handlebars.engine({
 // outras configs
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
+<<<<<<< HEAD
 app.use(express.urlencoded({
     extended: false
 }));
+=======
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.TOKEN_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+>>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
 
 // rotas e middlewares
 
-//adicionar middleware para controle de rotas / verificar se o usuário está logado
 
-app.get('/', (req, res) => {
-    res.status(200).render('index');
-});
+// páginas
 
-app.get('/login', (req, res) => {
-    res.status(200).render('login');
-});
+app.all('/*', paginasRoutes);
 
-app.get('/signup', (req, res) => {
-    res.status(200).render('signup');
-});
+// autenticação
 
-app.get('/sobre', (req, res) => {
-    res.status(200).render('sobre');
-});
+app.all('/auth/*', autenticacaoRoutes);
 
-app.get('/eventos', (req, res) => {
-    res.status(200).render('eventos');
-});
-
-app.get('/editar', (req, res) => {
-    res.status(200).render('editar');
-});
-
-app.get('/evento/:id', (req, res) => {
-    res.status(200).render('detalhes');
-})
 
 // rotas do usuário
 
+<<<<<<< HEAD
 app.use('/usuario', usuarioRoutes);
 
 app.use((req, res) => {
@@ -70,6 +71,11 @@ app.use((req, res) => {
 port
 
 
+=======
+app.use((req, res) => {
+    res.status(400).send("Not Found");
+});
+>>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
 
 // server
 
