@@ -1,15 +1,14 @@
 <div class="container-login">
-    <form>
+    <form method="POST" action="/auth/login">
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Usuário ou e-mail:</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Exemplo: usuario@dominio.com</div>
+            <label for="email" class="form-label">Usuário ou e-mail:</label>
+            <input type="email" class="form-control" name="email" id="login-email" required>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Senha:</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <label for="senha" class="form-label">Senha:</label>
+            <input type="password" class="form-control" name="senha" id="senha" required>
         </div>
-        <a class="btn btn-primary" href="/usuario" role="button">Entrar</a>    
-       <br> Não tem uma conta? <a href="/signup">Criar conta</a>.
+        <input type="submit" value="Entrar" class="btn btn-primary">    
+       <br> Não tem uma conta? <a href="/auth/signup">Criar conta</a>.
     </form>
 </div>
