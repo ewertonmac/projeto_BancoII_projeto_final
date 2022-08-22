@@ -72,30 +72,32 @@ const cadastrar = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    
+
     const usuario = await Usuario.findOne({
         email: req.body.email
     });
 
-    if(usuario === null) {
-        res.status(401).send('Não autorizado!');
+    if (usuario === null) {
+        req.flash('Não autorizado')
+        res.status(401).redirect('/auth/login');
     }
 
+
     bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
-        if(err) {
+        if (err) {
             res.status(401).send('Não autorizado!');
         }
-        if(result) {
+        if (result) {
             const token = jwt.sign({
                 id: usuario.id,
                 email: usuario.email
             }, process.env.TOKEN_SECRET);
 
-            return res.status(200).send({email: usuario.email, token: token});
+            res.status(200).redirect('/');
 
         }
-        res.status(401).send('Falha na autenticação!');
     });
+
 
 }
 

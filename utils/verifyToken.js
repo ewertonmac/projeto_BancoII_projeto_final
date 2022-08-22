@@ -1,19 +1,20 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const auth = (req, res, next) => {
-  const token = req.header('Auth-Token');
+module.exports = (req, res, next) => {
 
-  if (!token) {
-    return res.status(401).send('Access Denied');
+  const auth = req.headers.authorization;
+
+  if(!auth) {
+    return res.status(401).send('Não autorizado');
   }
 
-  try {
-      const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-      req.user = verified;
-      next();
-  } catch(err) {
-      res.status(400).send('Invalid Token')
-  }
+  const token = auth.split(' ');
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+    if(err) return res.status(401).send('Não autorizado!');
+  });
+
+  
+
 }
-
-module.exports = auth;

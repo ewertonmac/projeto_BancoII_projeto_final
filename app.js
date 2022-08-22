@@ -1,8 +1,11 @@
 // importações das dependências
 const express = require('express');
+const flash = require('connect-flash');
 const handlebars = require('express-handlebars');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const session = require("express-session");
+const passport = require("passport");
 require('dotenv').config();
 
 // importações dos routes
@@ -29,6 +32,15 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(session({
+    secret: process.env.TOKEN_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // rotas e middlewares
 
@@ -43,8 +55,6 @@ app.all('/auth/*', autenticacaoRoutes);
 
 
 // rotas do usuário
-
-
 
 app.use((req, res) => {
     res.status(400).send("Not Found");
