@@ -13,6 +13,7 @@ require('dotenv').config();
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const autenticacaoRoutes = require('./routes/autenticacao');
 const paginasRoutes = require('./routes/paginasRoutes');
+const eventosRoutes = require('./routes/eventosRoutes');
 
 // configurações
 
@@ -26,7 +27,11 @@ app.set('view engine', '.hbs');
 app.set('views', path.resolve(__dirname, 'views'));
 app.engine('.hbs', handlebars.engine({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    },
 }));
 
 
@@ -56,6 +61,10 @@ app.all('/*', paginasRoutes);
 
 app.all('/auth/*', autenticacaoRoutes);
 
+// eventos
+
+app.all('/*', eventosRoutes);
+app.all('/eventos/*', eventosRoutes);
 
 // rotas do usuário
 

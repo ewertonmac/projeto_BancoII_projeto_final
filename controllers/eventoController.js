@@ -6,7 +6,25 @@ const listar = (req, res) => {
             if (!eventos) {
                 return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
             }
-            return res.status(200).send(eventos);
+            return res.status(200).render('index', {
+                usuario: req.session.user,
+                evento: eventos,
+            });
+        }).catch(err => {
+            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+        });
+}
+
+const listarHome = (req, res) => {
+    Evento.find().limit(3)
+        .then(eventos => {
+            if (!eventos) {
+                return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
+            }
+            return res.status(200).render('index', {
+                usuario: req.session.user,
+                evento: eventos,
+            });
         }).catch(err => {
             return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
         });
@@ -18,7 +36,10 @@ const listarPorId = (req, res) => {
             if (!evento) {
                 return res.status(404).json({ "status": 404, "conteudo": "evento não encontrado" });
             }
-            return res.status(200).send(evento);
+            return res.status(200).render('detalhes-evento', {
+                usuario: req.session.user,
+                evento: evento
+            });
         }).catch(err => {
             return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
         });
@@ -50,10 +71,11 @@ const listarPorEmailPalestrante = (req, res) => {
 
 const cadastrar = (req, res) => {
     const evento = new Evento(req.body);
+    evento.palestrante = req.session.user;
 
     evento.save()
         .then(evento => {
-            return res.status(201).send(evento);
+            return res.status(201).redirect('/');
         }).catch(err => {
             if (err.code === 11000) {
                 return res.status(400).json({ "status": 400, "conteudo": "evento já cadastrado" });
@@ -115,6 +137,7 @@ const deletar = (req, res) => {
 
 module.exports = {
     listar,
+    listarHome,
     proximosEventos,
     inscreverOuvinte,
     listarPorId,
