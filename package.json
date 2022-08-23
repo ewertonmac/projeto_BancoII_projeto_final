@@ -22,12 +22,8 @@
     "express-session": "^1.17.3",
     "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
-<<<<<<< HEAD
     "mongo": "^0.1.0",
-    "mongoose": "^6.5.2"
-=======
     "mongoose": "^6.5.2",
     "passport": "^0.6.0"
->>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
   }
 }

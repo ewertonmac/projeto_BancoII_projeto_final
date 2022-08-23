@@ -30,11 +30,6 @@ app.engine('.hbs', handlebars.engine({
 // outras configs
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
-<<<<<<< HEAD
-app.use(express.urlencoded({
-    extended: false
-}));
-=======
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({
@@ -46,7 +41,6 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
->>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
 
 // rotas e middlewares
 
@@ -62,20 +56,11 @@ app.all('/auth/*', autenticacaoRoutes);
 
 // rotas do usuário
 
-<<<<<<< HEAD
 app.use('/usuario', usuarioRoutes);
 
 app.use((req, res) => {
     res.status(400).send("Not Found");
 });
-port
-
-
-=======
-app.use((req, res) => {
-    res.status(400).send("Not Found");
-});
->>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
 
 // server
 
