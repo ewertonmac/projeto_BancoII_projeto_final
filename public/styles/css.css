@@ -116,13 +116,13 @@ body {
 .titulo{
     text-align: center;
     padding-top:20px;
-<<<<<<< HEAD
-}
-=======
 }
 
-h3{
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+h3 {
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
->>>>>>> 2f35c7b0bc3eecbb3bf0d1ce1c1d9b59e51b262d
+
+.foto-perfil {
+    max-width: 30%;
+    border-radius: 50%;
+}

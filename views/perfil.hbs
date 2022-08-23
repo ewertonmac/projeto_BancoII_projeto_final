@@ -1,0 +1,24 @@
+<div class="container mt-5 d-flex flex-column justify-content-center align-items-center">
+    <div class="nome-avatar d-flex flex-column align-items-center justify-content-center">
+        <img src="{{#if usuario.urlImagemPerfil}}{{usuario.urlImagemPerfil}}{{else}}/images/avatar.jpg{{/if}}" class="foto-perfil">
+        <h2>{{usuario.nome}} {{usuario.sobrenome}}</h2>
+    </div>
+    <div class="informacoes mt-3">
+        <ul>
+            <li><b>Email: </b> {{usuario.email}}</li>
+            <li><b>Status: </b> {{usuario.status}}</li>
+            <li><b>Instituição: </b> {{#if usuario.instituicao}}{{usuario.instituicao}}{{else}}Preencha...{{/if}}</li>
+            <li><b>Telefone: </b> {{#if usuario.telefone}}{{usuario.telefone}}{{else}}Preencha...{{/if}}</li>
+            <li><b>Site: </b> {{#if usuario.site}}{{usuario.site}}{{else}}Preencha...{{/if}}</li>
+            <li><b>Currículo Lattes: </b> {{#if usuario.curriculoLattes}}{{usuario.curriculoLattes}}{{else}}Preencha...{{/if}}</li>
+            <li><b>Instagram: </b>{{#if usuario.instagramUser}}{{usuario.instagramUser}}{{else}}Preencha...{{/if}}</li>
+            <li><b>Instagram: </b>{{#if usuario.instagramUser}}{{usuario.instagramUser}}{{else}}Preencha...{{/if}}</li>
+            <li><b>Twitter: </b>{{#if usuario.twitterUser}}{{usuario.twitterUser}}{{else}}Preencha...{{/if}}</li>
+            <li><b>Github: </b>{{#if usuario.githubUser}}{{usuario.githubUser}}{{else}}Preencha...{{/if}}</li>     
+        </ul>
+    </div>
+    <div class="botoes">
+        <button class="btn btn-primary">Editar perfil</button>
+        <button class="btn btn-danger">Excluir conta</button>
+    </div>
+</div>

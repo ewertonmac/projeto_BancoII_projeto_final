@@ -4,23 +4,28 @@ const auth = require('../utils/auth');
 
 // routes
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
     res.status(200).render('index', {
-        usuario: req.session.user.nome,
+        usuario: req.session.user
     });
 });
 
-router.get('/eventos', auth, (req, res) => {
+router.get('/eventos', (req, res) => {
     res.status(200).render('eventos', {
-        usuario: req.session.user.nome       
+        usuario: req.session.user     
     });
 });
 
-router.get('/sobre', auth, (req, res) => {
+router.get('/sobre', (req, res) => {
     res.status(200).render('sobre', {
-        usuario: req.session.user.nome
+        usuario: req.session.user
     });
 });
 
+router.get('/perfil', auth, (req, res) => {
+    res.status(200).render('perfil', {
+        usuario: req.session.user
+    });
+})
 
 module.exports = router;
