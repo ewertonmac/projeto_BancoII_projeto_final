@@ -41,8 +41,8 @@ const listarPorId = (req, res) => {
 
 const listarPorEmail = (req, res) => {
     Usuario.findOne({
-            email: req.params.email
-        })
+        email: req.params.email
+    })
         .then(usuario => {
             if (!usuario) {
                 return res.status(404).json({
@@ -113,13 +113,12 @@ const login = async (req, res) => {
                 const user = usuario;
 
                 req.session.user = user;
-                // setando o token da sessão no Redis
-                
+
                 res.status(200).redirect('/');
 
             }
         });
-    } catch(e) {
+    } catch (e) {
         res.status(500).end(e.message);
     }
 
@@ -127,8 +126,8 @@ const login = async (req, res) => {
 
 const atualizar = (req, res) => {
     Usuario.findByIdAndUpdate(req.params.id, req.body, {
-            new: true
-        })
+        new: true
+    })
         .then(usuario => {
             if (!usuario) {
                 return res.status(404).json({
@@ -147,8 +146,8 @@ const atualizar = (req, res) => {
 
 const deletar = (req, res) => {
     Usuario.deleteOne({
-            _id: req.params.id
-        })
+        _id: req.params.id
+    })
         .then(result => {
             if (result.deletedCount === 0) {
                 return res.status(404).json({
@@ -169,50 +168,55 @@ const deletar = (req, res) => {
         })
 }
 
-const auth = async (req, res) => {
-    console.log(req.body);
-
-    const {
-        email,
-        senha
-    } = req.body;
-
-    const usuario_encontrado = await Usuario.findOne({
-        email
-    });
-    console.log(usuario_encontrado);
-    if (!usuario_encontrado) {
-        return res.status(404).json({
-            "status": 404,
-            "conteudo": "usuário não encontrado"
-        });
-    }
-
-    const senha_comparada = await bcrypt.compare(senha, usuario_encontrado.senha);
-    console.log(senha_comparada);
-    if (!senha_comparada) {
-        return res.status(401).json({
-            "status": 401,
-            "conteudo": "Senhas diferentes"
-        });
-    }
-
-    const {
-        token_key
-    } = process.env;
-
-    const token = sign({
-        email
-    }, token_key, {
-        expiresIn: '4h',
-        subject: email
-    })
-
-    return res.status(200).json({
-        token
-    })
+const logout = (req, res) => {
+    req.session.destroy();
+    res.status(200).redirect('/');
 }
 
+// const auth = async (req, res) => {
+//     console.log(req.body);
+
+//     const {
+//         email,
+//         senha
+//     } = req.body;
+
+//     const usuario_encontrado = await Usuario.findOne({
+//         email
+//     });
+//     console.log(usuario_encontrado);
+//     if (!usuario_encontrado) {
+//         return res.status(404).json({
+//             "status": 404,
+//             "conteudo": "usuário não encontrado"
+//         });
+//     }
+
+//     const senha_comparada = await bcrypt.compare(senha, usuario_encontrado.senha);
+//     console.log(senha_comparada);
+//     if (!senha_comparada) {
+//         return res.status(401).json({
+//             "status": 401,
+//             "conteudo": "Senhas diferentes"
+//         });
+//     }
+
+//     const {
+//         token_key
+//     } = process.env;
+
+//     const token = sign({
+//         email
+//     }, token_key, {
+//         expiresIn: '4h',
+//         subject: email
+//     })
+
+//     return res.status(200).json({
+//         token
+//     })
+// }
 
 
-module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar, auth }
+
+module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar, logout }

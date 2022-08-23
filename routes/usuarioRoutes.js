@@ -11,6 +11,6 @@ router.get('/email/:email', usuario.listarPorEmail);
 router.post('/', usuario.cadastrar);
 router.put('/:id', usuario.atualizar);
 router.delete('/:id', usuario.deletar);
-router.post('/auth', usuario.auth);
+// router.post('/auth', usuario.auth);
 
 module.exports = router;

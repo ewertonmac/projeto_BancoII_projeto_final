@@ -18,4 +18,7 @@ router.post('/auth/login', usuario.login);
 
 router.post('/auth/signup', usuario.cadastrar);
 
+router.get('/auth/logout', usuario.logout);
+
+
 module.exports = router;
