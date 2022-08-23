@@ -10,7 +10,7 @@ const helpers = {
         }
     },
     "getName": function(user) {
-        return user.name();
+        return user.nome();
     },
 }
 

@@ -5,13 +5,15 @@ const handlebars = require('express-handlebars');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
-const passport = require("passport");
+const redisClient = require('./database/redis');
+let RedisStore = require("connect-redis")(session);
 require('dotenv').config();
 
 // importações dos routes
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const autenticacaoRoutes = require('./routes/autenticacao');
 const paginasRoutes = require('./routes/paginasRoutes');
+const helpers = require('./utils/hbs_helpers');
 
 // configurações
 
@@ -24,7 +26,10 @@ app.set('view engine', '.hbs');
 app.set('views', path.resolve(__dirname, 'views'));
 app.engine('.hbs', handlebars.engine({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+        getNome: helpers.getName
+    }
 }));
 
 // outras configs
@@ -34,18 +39,18 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({
     secret: process.env.token_key,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: true }
+    resave: false,
+    saveUninitialized: false,
+    store: new RedisStore({ client: redisClient })
 }));
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // rotas e middlewares
 
 
 // páginas
+
 
 app.all('/*', paginasRoutes);
 

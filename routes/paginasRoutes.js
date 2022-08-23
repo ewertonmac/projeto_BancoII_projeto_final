@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../utils/auth');
 
 // routes
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     res.status(200).render('index');
 });
 
-router.get('/eventos', (req, res) => {
+router.get('/eventos', auth, (req, res) => {
     res.status(200).render('eventos');
 });
 
-router.get('/sobre', (req, res) => {
+router.get('/sobre', auth, (req, res) => {
     res.status(200).render('sobre');
 });
 

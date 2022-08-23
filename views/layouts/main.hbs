@@ -33,10 +33,14 @@
                 </li>
             </ul>
             <div class="d-flex">
+              {{#if req.session.user }} 
+                  {{getNome(req.session.user)}}
+              {{else}}
                 <ul class="nav justify-content-center">
                     <a href="/auth/login" class="btn">Login</a>
                     <a href="/auth/signup" class="btn btn-primary" id="signup-button">Criar conta</a>
                 </ul>
+              {{/if}}
             </div>
         </header>
         {{{body}}}

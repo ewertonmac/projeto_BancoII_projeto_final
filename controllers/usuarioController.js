@@ -1,6 +1,6 @@
 const Usuario = require('../model/usuario');
 const bcrypt = require('bcrypt');
-const { sign } = require('jsonwebtoken');
+const redis = require('../database/redis');
 require('dotenv').config();
 
 const listar = (req, res) => {
@@ -104,22 +104,24 @@ const login = async (req, res) => {
         res.status(401).redirect('/auth/login');
     }
 
+    try {
+        bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
+            if (err) {
+                res.status(401).send('Não autorizado!');
+            }
+            if (result) {
+                const user = usuario;
 
-    bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
-        if (err) {
-            res.status(401).send('Não autorizado!');
-        }
-        if (result) {
-            const token = sign({
-                id: usuario.id,
-                email: usuario.email
-            }, process.env.token_key);
+                req.session.user = user;
+                // setando o token da sessão no Redis
+                
+                res.status(200).redirect('/');
 
-            res.status(200).redirect('/');
-
-        }
-    });
-
+            }
+        });
+    } catch(e) {
+        res.status(500).end(e.message);
+    }
 
 }
 
