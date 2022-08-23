@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({
-    secret: process.env.TOKEN_SECRET,
+    secret: process.env.token_key,
     resave: true,
     saveUninitialized: true,
     cookie: { secure: true }
