@@ -13,6 +13,7 @@ require('dotenv').config();
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const autenticacaoRoutes = require('./routes/autenticacao');
 const paginasRoutes = require('./routes/paginasRoutes');
+const eventosRoutes = require('./routes/eventosRoutes');
 
 // configurações
 
@@ -56,6 +57,9 @@ app.all('/*', paginasRoutes);
 
 app.all('/auth/*', autenticacaoRoutes);
 
+// eventos
+
+app.all('/eventos/*', eventosRoutes);
 
 // rotas do usuário
 

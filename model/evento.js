@@ -6,6 +6,7 @@ const schema = new mongoDB.Schema({
     descricao: { type: String, required: true },
     data: { type: Date, required: true },
     siteOficial: { type: String, required: true },
+    categoria: String,
     palestrante: {
         type: {
             nome: { type: String, required: true },

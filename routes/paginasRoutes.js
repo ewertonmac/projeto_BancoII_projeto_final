@@ -28,4 +28,10 @@ router.get('/perfil', auth, (req, res) => {
     });
 })
 
+router.get('/publicar', auth, (req, res) => {
+    res.status(200).render('publicar', {
+        usuario: req.session.user
+    });
+})
+
 module.exports = router;

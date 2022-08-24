@@ -1,0 +1,30 @@
+<div class="container mt-5">
+    <form action="/eventos/" method="post">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome do evento:</label>
+            <input type="text" name="nome" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição do evento:</label>
+            <textarea name="descricao" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="data" class="form-label">Data do evento:</label>
+            <input type="date" name="data" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="siteOficial" class="form-label">Site oficial do evento:</label>
+            <input type="text" name="siteOficial" class="form-control" placeholder="http://www.evento.com.br">
+        </div>
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria do evento:</label>
+            <select name="categoria" class="form-select">
+                <option value="segurancaDeRedes">Segurança de Redes</option>
+                <option value="engenhariaSoftware">Engenharia de Software</option>
+                <option value="desenvolvimento">Desenvolvimento</option>
+                <option value="outros">Outros</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Publicar</button>
+    </form>
+</div>

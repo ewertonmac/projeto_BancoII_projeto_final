@@ -50,6 +50,7 @@ const listarPorEmailPalestrante = (req, res) => {
 
 const cadastrar = (req, res) => {
     const evento = new Evento(req.body);
+    evento.palestrante = req.session.user;
 
     evento.save()
         .then(evento => {
