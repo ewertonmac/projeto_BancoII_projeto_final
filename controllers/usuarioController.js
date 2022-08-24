@@ -145,6 +145,9 @@ const atualizar = (req, res) => {
 }
 
 const deletar = (req, res) => {
+
+    req.session.destroy();
+
     Usuario.deleteOne({
         _id: req.params.id
     })

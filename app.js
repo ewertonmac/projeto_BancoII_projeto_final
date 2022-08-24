@@ -59,7 +59,7 @@ app.all('/auth/*', autenticacaoRoutes);
 
 // rotas do usuário
 
-app.use('/usuario', usuarioRoutes);
+app.use('/usuario/*', usuarioRoutes);
 
 app.use((req, res) => {
     res.status(400).send("Not Found");

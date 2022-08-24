@@ -5,12 +5,12 @@ const router = express.Router();
 const usuario = require('../controllers/usuarioController');
 
 // routes
-router.get('/', usuario.listar);
-router.get('/:id', usuario.listarPorId);
-router.get('/email/:email', usuario.listarPorEmail);
+router.get('/usuario/', usuario.listar);
+router.get('/usuario/:id', usuario.listarPorId);
+router.get('/usuario/:email', usuario.listarPorEmail);
 router.post('/', usuario.cadastrar);
-router.put('/:id', usuario.atualizar);
-router.delete('/:id', usuario.deletar);
+router.put('/usuario/atualizar/:id', usuario.atualizar);
+router.post('/usuario/deletar/:id', usuario.deletar);
 // router.post('/auth', usuario.auth);
 
 module.exports = router;

@@ -17,8 +17,11 @@
             <li><b>Github: </b>{{#if usuario.githubUser}}{{usuario.githubUser}}{{else}}Preencha...{{/if}}</li>     
         </ul>
     </div>
-    <div class="botoes">
-        <button class="btn btn-primary">Editar perfil</button>
-        <button class="btn btn-danger">Excluir conta</button>
+    <div class="botoes d-flex">
+        <input type="submit" value="Editar perfil" class="btn btn-primary">
+
+        <form action="/usuario/deletar/{{usuario._id}}" method="POST">
+            <input type="submit" value="Excluir conta" class="btn btn-danger">
+        </form>
     </div>
 </div>
