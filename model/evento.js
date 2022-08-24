@@ -5,6 +5,7 @@ const schema = new mongoDB.Schema({
     nome: { type: String, required: true, unique: true },
     descricao: { type: String, required: true },
     data: { type: Date, required: true },
+    urlImagem: { type: String, require: true },
     siteOficial: { type: String, required: true },
     categoria: String,
     palestrante: {
@@ -18,7 +19,7 @@ const schema = new mongoDB.Schema({
         type: [{
             nome: { type: String, required: true },
             sobrenome: { type: String, required: true },
-            email: { type: String, required: true, unique: true },
+            email: { type: String, required: true},
         }], required: false
     },
 });

@@ -2,13 +2,11 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../utils/auth');
 
+const eventoController = require('../controllers/eventoController');
+
 // routes
 
-router.get('/', (req, res) => {
-    res.status(200).render('index', {
-        usuario: req.session.user
-    });
-});
+router.get('/', eventoController.listarHome);
 
 router.get('/eventos', (req, res) => {
     res.status(200).render('eventos', {

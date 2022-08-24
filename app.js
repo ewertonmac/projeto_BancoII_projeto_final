@@ -27,7 +27,11 @@ app.set('view engine', '.hbs');
 app.set('views', path.resolve(__dirname, 'views'));
 app.engine('.hbs', handlebars.engine({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    },
 }));
 
 
@@ -59,6 +63,7 @@ app.all('/auth/*', autenticacaoRoutes);
 
 // eventos
 
+app.all('/*', eventosRoutes);
 app.all('/eventos/*', eventosRoutes);
 
 // rotas do usuário

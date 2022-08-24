@@ -6,7 +6,25 @@ const listar = (req, res) => {
             if (!eventos) {
                 return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
             }
-            return res.status(200).send(eventos);
+            return res.status(200).render('index', {
+                usuario: req.session.user,
+                evento: eventos,
+            });
+        }).catch(err => {
+            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+        });
+}
+
+const listarHome = (req, res) => {
+    Evento.find().limit(3)
+        .then(eventos => {
+            if (!eventos) {
+                return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
+            }
+            return res.status(200).render('index', {
+                usuario: req.session.user,
+                evento: eventos,
+            });
         }).catch(err => {
             return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
         });
@@ -54,7 +72,7 @@ const cadastrar = (req, res) => {
 
     evento.save()
         .then(evento => {
-            return res.status(201).send(evento);
+            return res.status(201).redirect('/');
         }).catch(err => {
             if (err.code === 11000) {
                 return res.status(400).json({ "status": 400, "conteudo": "evento já cadastrado" });
@@ -116,6 +134,7 @@ const deletar = (req, res) => {
 
 module.exports = {
     listar,
+    listarHome,
     proximosEventos,
     inscreverOuvinte,
     listarPorId,

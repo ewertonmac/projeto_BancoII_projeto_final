@@ -42,35 +42,20 @@
 </div>
 <div class="container mt-3">
     <h2>Últimos eventos acadêmicos</h2>
-     <div id="card-eventos" class="d-flex flex-wrap justify-content-around">
-        <div class="card home-cards" style="height:45rem; width:30%;">
-            <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F329950549%2F421071480283%2F1%2Foriginal.20220804-180622?w=800&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=0907a83e7990bb9050015926e4df606f" 
-            class="card-img-top" alt=""some text" width=150 height=200">
-            <div class="card-body d-flex flex-column align-items-center">
-                <h4 class="card-title"><b>Mulher Tech Sim Senhor</b></h4>
-                <p class="card-text">O Mulher Tech Sim Senhor é um grande encontro das mulheres de TI da Paraíba, 
-                    promovido anualmente pelo Women Techmakers JP, um programa de alcance global do Google. O evento não oferece apenas conteúdos técnicos, mas também assuntos como diversidade, 
-                    igualdade de gênero e mercado de trabalho.</p>
-                <a href="/eventos" class="btn btn-primary mt-auto">Detalhes</a>
-                
-            </div>
+    {{#if evento}}
+        <div id="card-eventos" class="d-flex flex-wrap justify-content-around">
+            {{#each evento}}
+                    <div class="card home-cards" style="height:30rem; width:30%;">
+                        <img src="{{this.urlImagem}}" class="card-img-top" width="150" height="200">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <h4 class="card-title"><b>{{this.nome}}</b></h4>
+                            <p class="card-text">{{this.descricao}}</p>
+                            <a href="/eventos" class="btn btn-primary mt-auto">Detalhes</a>
+                        </div>
+                    </div> 
+            {{/each}}
         </div>
-        <div class="card home-cards" style="height:45rem; width:30%;">
-            <img src="https://th.bing.com/th/id/OIP.qBokozZV0hRf1unYL8x7iQHaE7?pid=ImgDet&rs=1" class="card-img-top" alt=""some text" width=150 height=200">
-            <div class="card-body d-flex flex-column align-items-center">
-                <h4 class="card-title"><b>Maratona POP</b></h4>
-                <p class="card-text">A Maratona POP é uma olimpíada de programação realizada desde 2004 pelo Projeto Olímpico de Programação (POP) do IFPB. O POP é um projeto que visa agregar ao currículo técnico, as habilidades básicas e avançadas de programação.</p>
-                <a href="/eventos" class="btn btn-primary mt-auto">Detalhes</a>
-            </div>
-        </div>
-        <div class="card home-cards" style="height:45rem; width:30%;">
-            <img src="https://www.ifpb.edu.br/joaopessoa/noticias/2020/11/campus-joao-pessoa-informa-sobre-impossibilidade-de-acesso-ao-predio-no-periodo-de-13-a-16-de-novembro/fachada.jpeg" class="card-img-top" alt=""some text" width=150 height=200">
-            <div class="card-body d-flex flex-column align-items-center">
-                <h4 class="card-title"><b>2º Festival de Arte e Cultura do IFPB e I Encontro de Economia Solidária do IFPB</b></h4>
-                <p class="card-text">O 2º Festival de Arte e Cultura do IFPB, promovido pela Pró-Reitoria de Extensão e Cultura, se constitui em uma série de mostras estudantis que contemplam as artes 
-                 e as culturas contemporâneas em seus aspectos tradicional e urbana.</p>
-                <a href="/eventos" class="btn btn-primary mt-auto">Detalhes</a>
-            </div>
-        </div>
-    </div>
+    {{else}}
+        <p>Nenhum evento cadastrado</p>
+    {{/if}}
 </div>
