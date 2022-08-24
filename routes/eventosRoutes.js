@@ -6,7 +6,8 @@ const eventoController = require('../controllers/eventoController');
 
 // routes
 
-router.get('/', eventoController.listar);
+router.get('/', eventoController.listarHome);
+router.get('/eventos/', eventoController.listar);
 router.get('/eventos/proximos/:quantidade', eventoController.proximosEventos);
 router.get('/eventos/:id', eventoController.listarPorId);
 router.get('/eventos/email/:email', eventoController.listarPorEmailPalestrante);

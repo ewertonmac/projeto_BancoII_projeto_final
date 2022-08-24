@@ -13,6 +13,11 @@ const schema = new mongoDB.Schema({
             nome: { type: String, required: true },
             sobrenome: { type: String, required: true },
             email: { type: String, required: true },
+            minicurriculo: { type: String, required: true},
+            curriculoLattes: { type: String, required: true},
+            site: { type: String, required: true},
+            twitterUser: { type: String, required: false},
+            instagramUser: { type: String, required: false},
         }, required: true
     },
     ouvintes: {

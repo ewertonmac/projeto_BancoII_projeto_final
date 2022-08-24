@@ -6,7 +6,8 @@ const listar = (req, res) => {
             if (!eventos) {
                 return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
             }
-            return res.status(200).render('index', {
+            console.log(eventos);
+            return res.status(200).render('eventos', {
                 usuario: req.session.user,
                 evento: eventos,
             });
@@ -80,7 +81,8 @@ const cadastrar = (req, res) => {
             if (err.code === 11000) {
                 return res.status(400).json({ "status": 400, "conteudo": "evento já cadastrado" });
             }
-            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+            req.flash('error', `${err.message}`);
+            return res.status(500).redirect('/');
         })
 
 }
