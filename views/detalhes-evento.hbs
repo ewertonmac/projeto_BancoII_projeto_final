@@ -4,13 +4,24 @@
     <img src="{{evento.urlImagem}}" class="d-block w-100">
     <p class="mt-3">{{evento.descricao}}</p>
     <p class="mt-3"><b>Data do evento: </b> {{evento.data}}</p>
-    <h3>Palestrante</h3>
-    <p>
-        <ul>
-            <li>Nome: {{evento.palestrante.nome}} {{evento.palestrante.sobrenome}}</li>
-            <li>Email: {{evento.palestrante.email}}</li>
-            <li>Minicurriculo: {{evento.palestrante.minicurriculo}}</li>
-        </ul>
+    <div class="card">
+  <div class="card-header">
+    Palestrante
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+        <div class="card-body">
+                 <p class="card-text">
+                    Nome: {{evento.palestrante.nome}} {{evento.palestrante.sobrenome}}
+                   <br> Email: {{evento.palestrante.email}}
+                   <br> Minicurriculo: {{evento.palestrante.minicurriculo}} 
+                 </p>
+        </div>
+    </div>
     </p>
-    <form action="/"></form>
+  </div>
+     <a href="#" class="btn btn-primary"style="margin-top:15px"; >Se Inscrever</a>
+</div>
+  
+   
 </div>
