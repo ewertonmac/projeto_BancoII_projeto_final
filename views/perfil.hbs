@@ -41,7 +41,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://64.media.tumblr.com/22f36c1816d65829fb609c83ae28b0a6/tumblr_plr7s0MQBe1wxflxl_400.jpg" alt="Admin" class="rounded-circle" width="150">
+                    <img src="{{#if usuario.urlImagem}} {{usuario.urlImagem}} {{else}}/images/avatar.jpg{{/if}}" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                        <h2>{{usuario.nome}} {{usuario.sobrenome}}</h2>
                     </div>
@@ -121,7 +121,7 @@
                   <div class="botoes d-flex">
                       <input type="submit" value="Editar perfil" class="btn btn-primary">
 
-                      <form action="/usuario/deletar/{{usuario._id}}" method="POST">
+                      <form action="/usuario/deletar/{{usuario._id}}" method="post">
                           <input type="submit" value="Excluir conta" class="btn btn-danger" style="margin-left:15px;">
                       </form>
                   </div>

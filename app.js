@@ -68,7 +68,9 @@ app.all('/eventos/*', eventosRoutes);
 
 // rotas do usuário
 
-app.use('/usuario/*', usuarioRoutes);
+app.all('/usuario/*', usuarioRoutes);
+
+// Not Founf
 
 app.use((req, res) => {
     res.status(400).send("Not Found");

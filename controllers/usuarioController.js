@@ -74,7 +74,13 @@ const cadastrar = async (req, res) => {
 
 
     const salt = await bcrypt.genSalt(10);
-    const hashedSenha = await bcrypt.hash(req.body.senha, salt);
+    let hashedSenha;
+
+    try {
+        hashedSenha = await bcrypt.hash(req.body.senha, salt);
+    } catch(e) {
+        return; 
+    }
 
     const novoUsuario = new Usuario(Object.assign({}, req.body));
     novoUsuario.senha = hashedSenha;
@@ -146,80 +152,35 @@ const atualizar = (req, res) => {
 
 const deletar = (req, res) => {
 
-    req.session.destroy();
-
-    Usuario.deleteOne({
-        _id: req.params.id
-    })
-        .then(result => {
-            if (result.deletedCount === 0) {
-                return res.status(404).json({
-                    "status": 404,
-                    "conteudo": "usuário não encontrado"
+    try {
+        Usuario.deleteOne({
+            _id: req.params.id
+        })
+            .then(result => {
+                if (result.deletedCount === 0) {
+                    return res.status(404).json({
+                        "status": 404,
+                        "conteudo": "usuário não encontrado"
+                    });
+                }
+                req.session.destroy();
+                return res.status(200).redirect('/');
+            })
+            .catch(err => {
+                return res.status(500).json({
+                    "status": 500,
+                    "conteudo": `${err.message}`
                 });
-            }
-            return res.status(200).json({
-                "status": 200,
-                "conteudo": "usuário deletado com sucesso"
-            });
-        })
-        .catch(err => {
-            return res.status(500).json({
-                "status": 500,
-                "conteudo": `${err.message}`
-            });
-        })
+            })
+    } catch(e) {
+        return res.status(500).send(`<b>Error:</b> ${e.message}`);
+    }
 }
 
 const logout = (req, res) => {
     req.session.destroy();
     res.status(200).redirect('/');
 }
-
-// const auth = async (req, res) => {
-//     console.log(req.body);
-
-//     const {
-//         email,
-//         senha
-//     } = req.body;
-
-//     const usuario_encontrado = await Usuario.findOne({
-//         email
-//     });
-//     console.log(usuario_encontrado);
-//     if (!usuario_encontrado) {
-//         return res.status(404).json({
-//             "status": 404,
-//             "conteudo": "usuário não encontrado"
-//         });
-//     }
-
-//     const senha_comparada = await bcrypt.compare(senha, usuario_encontrado.senha);
-//     console.log(senha_comparada);
-//     if (!senha_comparada) {
-//         return res.status(401).json({
-//             "status": 401,
-//             "conteudo": "Senhas diferentes"
-//         });
-//     }
-
-//     const {
-//         token_key
-//     } = process.env;
-
-//     const token = sign({
-//         email
-//     }, token_key, {
-//         expiresIn: '4h',
-//         subject: email
-//     })
-
-//     return res.status(200).json({
-//         token
-//     })
-// }
-
 
 
 module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar, logout }

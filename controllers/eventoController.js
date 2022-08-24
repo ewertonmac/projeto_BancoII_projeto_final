@@ -124,15 +124,19 @@ const atualizar = (req, res) => {
 }
 
 const deletar = (req, res) => {
-    Evento.deleteOne({ _id: req.params.id })
-        .then(result => {
-            if (result.deletedCount === 0) {
-                return res.status(404).json({ "status": 404, "conteudo": "evento não encontrado" });
-            }
-            return res.status(200).json({ "status": 200, "conteudo": "evento deletado com sucesso" });
-        }).catch(err => {
-            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
-        });
+    try {
+        Evento.deleteOne({ _id: req.params.id })
+            .then(result => {
+                if (result.deletedCount === 0) {
+                    return res.status(404).json({ "status": 404, "conteudo": "evento não encontrado" });
+                }
+                return res.status(200).json({ "status": 200, "conteudo": "evento deletado com sucesso" });
+            }).catch(err => {
+                return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+            });
+    } catch(e) {
+        return res.status(500).send(`<b>Eror:</b> ${e.message}`);
+    }
 }
 
 module.exports = {
