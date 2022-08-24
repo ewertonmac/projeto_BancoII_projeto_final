@@ -9,7 +9,8 @@ router.get('/usuario/', usuario.listar);
 router.get('/usuario/:id', usuario.listarPorId);
 router.get('/usuario/:email', usuario.listarPorEmail);
 router.post('/usuario/cadastrar', usuario.cadastrar);
-router.put('/usuario/atualizar/:id', usuario.atualizar);
+router.post('/usuario/atualizar/:id', usuario.atualizar);
+router.get('/usuario/atualizar/:id', usuario.atualizarPerfil);
 router.post('/usuario/deletar/:id', usuario.deletar);
 
 module.exports = router;

@@ -24,7 +24,6 @@
     "express-session": "^1.17.3",
     "mongo": "^0.1.0",
     "mongoose": "^6.5.2",
-    "passport": "^0.6.0",
     "redis": "^4.3.0"
   }
 }

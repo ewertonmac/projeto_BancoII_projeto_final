@@ -44,7 +44,8 @@ app.use(session({
     secret: process.env.token_key,
     resave: false,
     saveUninitialized: false,
-    store: new RedisStore({ client: redisClient })
+    store: new RedisStore({ client: redisClient }),
+    ttl: 1800
 }));
 app.use(flash());
 

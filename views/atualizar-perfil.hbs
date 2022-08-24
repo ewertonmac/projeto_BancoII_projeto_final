@@ -1,0 +1,56 @@
+<div class="container mt-5">
+    <div class="container mt-5">
+        <form action="/usuario/atualizar/{{usuario._id}}" method="post">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" name="nome" class="form-control" value="{{usuario.nome}}">
+            </div>
+            <div class="mb-3">
+                <label for="sobrenome" class="form-label">Sobrenome:</label>
+                <input type="text" name="sobrenome" class="form-control" value="{{usuario.sobrenome}}">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" name="email" class="form-control" value="{{usuario.email}}">
+            </div>
+            <div class="mb-3">
+                <label for="minicurriculo" class="form-label">Minicurrículo:</label>
+                <textarea name="minicurriculo" class="form-control" placeholder="Fale um pouco sobre você..." value="{{usuario.minicurriculo}}"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="urlImagemPerfil" class="form-label">Url da imagem de perfil:</label>
+                <input type="text" name="urlImagemPerfil" class="form-control" placeholder="Link da imagem hospedada">
+            </div>
+            <div class="mb-3">
+                <label for="instituicao" class="form-label">Instituição:</label>
+                <input type="text" name="instituicao" class="form-control" placeholder="Nome da instituição" value="{{usuario.instituicao}}">
+            </div>
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone:</label>
+                <input type="text" name="telefone" class="form-control" placeholder="(XX) XXXXX-XXXX" value="{{usuario.telefone}}">
+            </div>
+            <div class="mb-3">
+                <label for="site" class="form-label">Site:</label>
+                <input type="text" name="site" class="form-control" placeholder="http://seusite.com" value="{{usuario.site}}">
+            </div>
+            <div class="mb-3">
+                <label for="githubUser" class="form-label">Github:</label>
+                <input type="text" name="githubUser" class="form-control" placeholder="Seu link do Github..." value="{{usuario.githubUser}}">
+            </div>
+            <div class="mb-3">
+                <label for="twitterUser" class="form-label">Twitter:</label>
+                <input type="text" name="twitterUser" class="form-control" placeholder="Seu link do Twitter..." value="{{usuario.twitterUser}}">
+            </div>
+            <div class="mb-3">
+                <label for="instagramUser" class="form-label">Instagram:</label>
+                <input type="text" name="instagramUser" class="form-control" placeholder="Seu perfil do Instagram..." value="{{usuario.instagramUser}}">
+            </div>
+            <div class="mb-3">
+                <label for="curriculoLattes" class="form-label">Currículo Lattes:</label>
+                <input type="text" name="curriculoLattes" class="form-control" placeholder="Seu link do Currículo Lattes..." value="{{usuario.curriculoLattes}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Publicar</button>
+        </form>
+        <a href="/perfil"><button class="btn btn-danger mt-2">Cancelar</button></a>
+    </div>
+</div>

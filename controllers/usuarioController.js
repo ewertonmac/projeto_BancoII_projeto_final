@@ -1,6 +1,5 @@
 const Usuario = require('../model/usuario');
 const bcrypt = require('bcrypt');
-const redis = require('../database/redis');
 require('dotenv').config();
 
 const listar = (req, res) => {
@@ -141,7 +140,8 @@ const atualizar = (req, res) => {
                     "conteudo": "usuário não encontrado"
                 });
             }
-            return res.status(200).send(usuario);
+            req.session.user = usuario;
+            return res.status(200).redirect('/perfil');
         }).catch(err => {
             return res.status(500).json({
                 "status": 500,
@@ -177,10 +177,19 @@ const deletar = (req, res) => {
     }
 }
 
+const atualizarPerfil = (req, res) => {
+
+    res.status(200).render('atualizar-perfil', {
+        usuario: req.session.user
+    });
+
+}
+
+
 const logout = (req, res) => {
     req.session.destroy();
     res.status(200).redirect('/');
 }
 
 
-module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar, logout }
+module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar, atualizarPerfil, logout }
