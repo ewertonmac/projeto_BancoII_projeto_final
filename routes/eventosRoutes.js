@@ -12,7 +12,7 @@ router.get('/eventos/proximos/:quantidade', eventoController.proximosEventos);
 router.get('/eventos/:id', eventoController.listarPorId);
 router.get('/eventos/email/:email', eventoController.listarPorEmailPalestrante);
 router.post('/eventos', auth, eventoController.cadastrar);
-router.put('/eventos/inscrever/:id', auth, eventoController.inscreverOuvinte);
+router.post('/eventos/inscrever/:id', auth, eventoController.inscreverOuvinte);
 router.put('/eventos/:id', auth, eventoController.atualizar);
 router.delete('/eventos/:id', auth, eventoController.deletar);
 

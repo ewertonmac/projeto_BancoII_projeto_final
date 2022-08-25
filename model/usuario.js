@@ -1,7 +1,7 @@
 const mongoDB = require('../database/mongo');
 
 const schema = new mongoDB.Schema({
-    urlImagemPerfil: {type: String, required: false},
+    urlImagemPerfil: {type: String, required: false, default: '/images/avatar.jpg'},
     nome: {type: String, required: true},
     sobrenome: {type: String, required: true},
     email: {type: String, required: true, unique: true},

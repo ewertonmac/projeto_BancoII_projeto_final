@@ -8,12 +8,6 @@ const eventoController = require('../controllers/eventoController');
 
 router.get('/', eventoController.listarHome);
 
-router.get('/eventos', (req, res) => {
-    res.status(200).render('eventos', {
-        usuario: req.session.user     
-    });
-});
-
 router.get('/sobre', (req, res) => {
     res.status(200).render('sobre', {
         usuario: req.session.user

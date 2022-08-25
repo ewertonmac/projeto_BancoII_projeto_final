@@ -64,8 +64,7 @@ app.all('/auth/*', autenticacaoRoutes);
 
 // eventos
 
-app.all('/*', eventosRoutes);
-app.all('/eventos/*', eventosRoutes);
+app.all(/eventos(\/)*(\w)*(\/*)(\w)*(\/*)(\w)*/, eventosRoutes);
 
 // rotas do usuário
 
