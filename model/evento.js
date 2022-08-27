@@ -12,6 +12,7 @@ const schema = new mongoDB.Schema({
         type: {
             nome: { type: String, required: true },
             sobrenome: { type: String, required: true },
+            _id: { type: String, required: true},
             email: { type: String, required: true },
             minicurriculo: { type: String, required: true},
             curriculoLattes: { type: String, required: true},

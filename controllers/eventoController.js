@@ -38,10 +38,12 @@ const listarPorId = async (req, res) => {
         const ouvintes = evento.ouvintes.map((ouvinte) => {
             return ouvinte;
         })
+        const adminEvento = (evento.palestrante.id === req.session.user._id) ? true : false;
         return res.status(200).render('detalhes-evento', {
             usuario: req.session.user,
             evento: evento,
-            ouvinte: ouvintes
+            ouvinte: ouvintes,
+            autorizacaoEvento: adminEvento
         });
     } catch(e) {
         res.status(500).send(`Error: ${e.message}`);
@@ -115,29 +117,49 @@ const inscreverOuvinte = (req, res) => {
         })
 }
 
-const atualizar = (req, res) => {
-    Evento.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .then(evento => {
-            if (!evento) {
-                return res.status(404).json({ "status": 404, "conteudo": "evento não encontrado" });
-            }
-            return res.status(200).send(evento);
-        }).catch(err => {
-            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
-        });
+const atualizar = async (req, res) => {
+    const evento = await Evento.findOne({_id: req.params.id});
+    try {
+        if(req.session.user._id === evento.palestrante._id) {
+            Evento.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            .then(evento => {
+                if (!evento) {
+                    return res.status(404).json({ "status": 404, "conteudo": "evento não encontrado" });
+                }
+                return res.status(200).redirect(`/eventos/${evento.id}`);
+            }).catch(err => {
+                return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+            });
+        }
+    } catch(e) {
+        return res.status(500).send(`<b>Eror:</b> ${e.message}`);       
+    }
 }
 
-const deletar = (req, res) => {
+const atualizarEvento = async (req, res) => {
     try {
-        Evento.deleteOne({ _id: req.params.id })
+        const evento = await Evento.findOne({_id: req.params.id});
+        res.status(200).render('atualizar-evento', {
+            usuario: req.session.user,
+            evento: evento
+        })
+    } catch(e) {
+        res.status(500).send(`<b>Error:</b> ${e.message}`);
+    }
+}
+
+const deletar = async (req, res) => {
+    try {
+        const evento = await Evento.findOne({_id: req.params.id});
+        if(req.session.user._id === evento.palestrante._id) {
+            Evento.deleteOne({ _id: req.params.id })
             .then(result => {
                 if (result.deletedCount === 0) {
                     return res.status(404).json({ "status": 404, "conteudo": "evento não encontrado" });
                 }
-                return res.status(200).json({ "status": 200, "conteudo": "evento deletado com sucesso" });
-            }).catch(err => {
-                return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+                return res.status(200).redirect('/eventos');
             });
+        }
     } catch(e) {
         return res.status(500).send(`<b>Eror:</b> ${e.message}`);
     }
@@ -153,5 +175,6 @@ module.exports = {
     listarPorEmailPalestrante,
     cadastrar,
     atualizar,
+    atualizarEvento,
     deletar
 };

@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <div class="container mt-5">
+        <form action="/atualizar/eventos/{{evento._id}}" method="post">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" name="nome" class="form-control" value="{{evento.nome}}">
+            </div>
+            <div class="mb-3">
+                <label for="sobrenome" class="form-label">Descrição:</label>
+                <textarea name="descricao" id="descricao" class="form-control"f>{{evento.descricao}}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="data" class="form-label">Data:</label>
+                <input type="date" name="data" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="minicurriculo" class="form-label">Minicurrículo do palestrante:</label>
+                <textarea name="minicurriculo" class="form-control" placeholder="Fale um pouco sobre você...">{{evento.palestrante.minicurriculo}}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="urlImagemPerfil" class="form-label">Url do banner do evento:</label>
+                <input type="text" name="urlImagemPerfil" class="form-control" placeholder="Link da imagem hospedada" value="{{evento.urlImagem}}">
+            </div>
+            <div class="mb-3">
+                <label for="site" class="form-label">Site oficial:</label>
+                <input type="text" name="site" class="form-control" placeholder="http://seusite.com" value="{{evento.siteOficial}}">
+            </div>
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoria do evento:</label>
+                    <select name="categoria" class="form-select">
+                        <option value="segurancaDeRedes">Segurança de Redes</option>
+                        <option value="engenhariaSoftware">Engenharia de Software</option>
+                        <option value="desenvolvimento">Desenvolvimento</option>
+                        <option value="outros">Outros</option>
+                    </select>
+           </div>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
+        </form>
+        <a href="/perfil"><button class="btn btn-danger mt-2">Cancelar</button></a>
+    </div>
+</div>

@@ -46,7 +46,10 @@
   <form action="/eventos/inscrever/{{evento._id}}" method="post">
     <input type="submit" value="Se inscrever" class="btn btn-primary mt-3">
   </form>
+  {{#if autorizacaoEvento}}
+    <a href="/atualizar/eventos/{{evento._id}}"><button class="btn btn-primary mt-3">Editar informações</button></a>
+    <form action="/deletar/eventos/{{evento._id}}" method="post">
+      <input type="submit" value="Excluir evento" class="btn btn-danger mt-3">
+    </form>
+  {{/if}}
 </div>
-<script>
-  fetch('')
-</script>

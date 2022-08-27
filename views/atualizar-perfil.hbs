@@ -15,7 +15,7 @@
             </div>
             <div class="mb-3">
                 <label for="minicurriculo" class="form-label">Minicurrículo:</label>
-                <textarea name="minicurriculo" class="form-control" placeholder="Fale um pouco sobre você..." value="{{usuario.minicurriculo}}"></textarea>
+                <textarea name="minicurriculo" class="form-control" placeholder="Fale um pouco sobre você...">{{usuario.minicurriculo}}</textarea>
             </div>
             <div class="mb-3">
                 <label for="urlImagemPerfil" class="form-label">Url da imagem de perfil:</label>
@@ -49,7 +49,7 @@
                 <label for="curriculoLattes" class="form-label">Currículo Lattes:</label>
                 <input type="text" name="curriculoLattes" class="form-control" placeholder="Seu link do Currículo Lattes..." value="{{usuario.curriculoLattes}}">
             </div>
-            <button type="submit" class="btn btn-primary">Publicar</button>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
         <a href="/perfil"><button class="btn btn-danger mt-2">Cancelar</button></a>
     </div>

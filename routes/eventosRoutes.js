@@ -13,7 +13,8 @@ router.get('/eventos/:id', eventoController.listarPorId);
 router.get('/eventos/email/:email', eventoController.listarPorEmailPalestrante);
 router.post('/eventos', auth, eventoController.cadastrar);
 router.post('/eventos/inscrever/:id', auth, eventoController.inscreverOuvinte);
-router.put('/eventos/:id', auth, eventoController.atualizar);
-router.delete('/eventos/:id', auth, eventoController.deletar);
+router.get('/atualizar/eventos/:id', auth, eventoController.atualizarEvento);
+router.post('/atualizar/eventos/:id', auth, eventoController.atualizar);
+router.post('/deletar/eventos/:id', auth, eventoController.deletar);
 
 module.exports = router;
