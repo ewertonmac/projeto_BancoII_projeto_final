@@ -10,17 +10,17 @@
     </div>
     <div class="card-body">
       <p class="card-text">
-      <div class="card-body">
+
         <p class="card-text">
           Nome: {{evento.palestrante.nome}} {{evento.palestrante.sobrenome}}
           <br> Email: {{evento.palestrante.email}}
           <br> Minicurriculo: {{evento.palestrante.minicurriculo}}
         </p>
-      </div>
+
     </div>
     </p>
   </div>
-  <div class="card mt-2" id="ouvintes-evento">
+  <div class="card mt-4" id="ouvintes-evento">
     <div class="card-header">
       Ouvintes
     </div>
@@ -46,10 +46,14 @@
   <form action="/eventos/inscrever/{{evento._id}}" method="post">
     <input type="submit" value="Se inscrever" class="btn btn-primary mt-3">
   </form>
+
   {{#if autorizacaoEvento}}
-    <a href="/atualizar/eventos/{{evento._id}}"><button class="btn btn-primary mt-3">Editar informações</button></a>
+    <div class="botao">
+       <a href="/atualizar/eventos/{{evento._id}}">
+         <button class="btn btn-primary" id="editar">Editar informações</button></a>
     <form action="/deletar/eventos/{{evento._id}}" method="post">
-      <input type="submit" value="Excluir evento" class="btn btn-danger mt-3">
+      <input type="submit" value="Excluir evento" class="btn btn-danger mt-3" id="excluir" >
+    </div>
     </form>
   {{/if}}
 </div>

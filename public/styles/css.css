@@ -137,3 +137,21 @@ h3, h4 {
     overflow-y: scroll;
     max-height: 20rem;
 }
+
+.botao{
+    display: inline-block;
+}
+
+#editar {
+    margin-left:60%;
+
+    position: absolute;
+    top:51.3%;
+}
+
+#excluir {
+    margin-left:73%;
+ 
+    position: absolute;
+    top:50.2%;
+}
