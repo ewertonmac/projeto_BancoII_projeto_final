@@ -78,6 +78,10 @@ const cadastrar = (req, res) => {
     const evento = new Evento(req.body);
     evento.palestrante = req.session.user;
 
+    if(evento.palestrante.minicurriculo === '') {
+        return res.status(400).send('Preencha seu minicurriculo e outras informações no perfil primeiro!');
+    }
+
     evento.save()
         .then(evento => {
             return res.status(201).redirect('/');

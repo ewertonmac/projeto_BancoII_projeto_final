@@ -45,7 +45,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: new RedisStore({ client: redisClient }),
-    ttl: 1800
 }));
 app.use(flash());
 
@@ -70,11 +69,13 @@ app.all(/eventos(\/)*(\w)*(\/*)(\w)*(\/*)(\w)*/, eventosRoutes);
 
 app.all('/usuario/*', usuarioRoutes);
 
-// Not Founf
+// Not Found
 
 app.use((req, res) => {
     res.status(400).send("Not Found");
 });
+
+
 
 // server
 

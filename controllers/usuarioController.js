@@ -105,14 +105,13 @@ const login = async (req, res) => {
     });
 
     if (usuario === null) {
-        req.flash('Não autorizado')
         res.status(401).redirect('/auth/login');
     }
 
     try {
         bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
             if (err) {
-                res.status(401).send('Não autorizado!');
+                res.status(401).send('Não autorizado');
             }
             if (result) {
                 const user = usuario;
