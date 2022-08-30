@@ -38,7 +38,10 @@ const listarPorId = async (req, res) => {
         const ouvintes = evento.ouvintes.map((ouvinte) => {
             return ouvinte;
         })
-        const adminEvento = (evento.palestrante.id === req.session.user._id) ? true : false;
+        let adminEvento; 
+        if(req.session.user) {
+            adminEvento = (evento.palestrante.id === req.session.user._id) ? true : false;
+        }
         return res.status(200).render('detalhes-evento', {
             usuario: req.session.user,
             evento: evento,
