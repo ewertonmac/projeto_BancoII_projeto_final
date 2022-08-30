@@ -26,6 +26,7 @@
     </div>
     <div class="card-body">
         {{#if ouvinte}}
+<<<<<<< HEAD
           <p class="card-text">
             {{#each ouvinte}}
               <div class="card-body">
@@ -41,6 +42,22 @@
         <p>Nenhum ouvinte registrado.</p>
       {{/if}}
     </div>
+=======
+          {{#each ouvinte}}
+            <div class="card-body">
+              <p class="card-text">
+                <b>Nome:</b> {{this.nome}} {{this.sobrenome}}
+              <br><b>Email:</b> {{this.email}}
+              </p>
+              <hr>
+            </div>
+          {{/each}}
+        {{else}}
+          <p>Nenhum ouvinte registrado.</p>
+        {{/if}}
+      </div>
+      </p>
+>>>>>>> 1e00efbfc36c029c67d71dfe041568aab21101e7
   </div>
 
   <form action="/eventos/inscrever/{{evento._id}}" method="post">

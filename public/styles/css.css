@@ -146,12 +146,19 @@ h3, h4 {
     margin-left:60%;
 
     position: absolute;
-    top:51.3%;
+    top:53%;
 }
 
 #excluir {
     margin-left:73%;
  
     position: absolute;
-    top:50.2%;
+    top:52%;
+}
+
+#cancelar{
+    margin-left:7%;
+    position: absolute;
+    top:55.2%;
+    
 }
