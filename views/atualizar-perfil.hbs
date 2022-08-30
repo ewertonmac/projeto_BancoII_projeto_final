@@ -3,27 +3,27 @@
         <form action="/usuario/atualizar/{{usuario._id}}" method="post">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome:</label>
-                <input type="text" name="nome" class="form-control" value="{{usuario.nome}}">
+                <input type="text" name="nome" class="form-control" id="nome" value="{{usuario.nome}}" required>
             </div>
             <div class="mb-3">
                 <label for="sobrenome" class="form-label">Sobrenome:</label>
-                <input type="text" name="sobrenome" class="form-control" value="{{usuario.sobrenome}}">
+                <input type="text" name="sobrenome" class="form-control" id="sobrenome" value="{{usuario.sobrenome}}"required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" name="email" class="form-control" value="{{usuario.email}}">
+                <input type="email" name="email" class="form-control" id="email" value="{{usuario.email}}" required>
             </div>
             <div class="mb-3">
-                <label for="minicurriculo" class="form-label">Minicurrículo:</label>
-                <textarea name="minicurriculo" class="form-control" placeholder="Fale um pouco sobre você...">{{usuario.minicurriculo}}</textarea>
+                <label for="minicurriculo" class="form-label" >Minicurrículo:</label>
+                <textarea name="minicurriculo" class="form-control" placeholder="Fale um pouco sobre você..." required>{{usuario.minicurriculo}}</textarea>
             </div>
             <div class="mb-3">
                 <label for="urlImagemPerfil" class="form-label">Url da imagem de perfil:</label>
-                <input type="text" name="urlImagemPerfil" class="form-control" placeholder="Link da imagem hospedada" value="{{usuario.urlImagemPerfil}}">
+                <input type="text" name="urlImagemPerfil" class="form-control"  placeholder="Link da imagem hospedada" value="{{usuario.urlImagemPerfil}}" >
             </div>
             <div class="mb-3">
                 <label for="instituicao" class="form-label">Instituição:</label>
-                <input type="text" name="instituicao" class="form-control" placeholder="Nome da instituição" value="{{usuario.instituicao}}">
+                <input type="text" name="instituicao" class="form-control" placeholder="Nome da instituição" id="escola" value="{{usuario.instituicao}}" required>
             </div>
             <div class="mb-3">
                 <label for="telefone" class="form-label">Telefone:</label>

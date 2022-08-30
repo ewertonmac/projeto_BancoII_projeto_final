@@ -1,8 +1,8 @@
 <div class="container mt-5">
-    <form action="/eventos/" method="post">
+    <form action="/eventos/"  method="post">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome do evento:</label>
-            <input type="text" name="nome" class="form-control">
+            <input type="text" name="nome" class="form-control" placeholder="Digite o Nome do evento..." id="nome_evento" required> 
         </div>
         <div class="mb-3">
             <label for="descricao" class="form-label">Descrição do evento:</label>
@@ -10,15 +10,15 @@
         </div>
         <div class="mb-3">
             <label for="urlImagem" class="form-label">Url do banner do evento:</label>
-            <input type="text" name="urlImagem" class="form-control" placeholder="Link da imagem hospedada">
+            <input type="text" name="urlImagem" class="form-control" placeholder="Link da imagem hospedada" id="url" required>
         </div>
         <div class="mb-3">
             <label for="data" class="form-label">Data do evento:</label>
-            <input type="date" name="data" class="form-control">
+            <input type="date" name="data" class="form-control" id="data" required>
         </div>
         <div class="mb-3">
             <label for="siteOficial" class="form-label">Site oficial do evento:</label>
-            <input type="text" name="siteOficial" class="form-control" placeholder="http://www.evento.com.br">
+            <input type="text" name="siteOficial" class="form-control" placeholder="http://www.evento.com.br" id="site_evento" required>
         </div>
         <div class="mb-3">
             <label for="categoria" class="form-label">Categoria do evento:</label>
