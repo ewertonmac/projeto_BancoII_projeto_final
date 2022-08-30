@@ -29,7 +29,7 @@ const schema = new mongoDB.Schema({
     },
     telefone: {
         type: String,
-        required: true
+        required: false
     },
     status: {
         type: String,

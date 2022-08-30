@@ -1,6 +1,5 @@
 const Usuario = require('../model/usuario');
 const bcrypt = require('bcrypt');
-const neo4j = require('../database/neo4j');
 require('dotenv').config();
 
 const listar = (req, res) => {
@@ -25,9 +24,12 @@ const listar = (req, res) => {
 }
 
 const listarPorId = async (req, res) => {
-    if(req.params.id === req.session.user._id) {
-        return res.redirect('/perfil');
+    if(req.session.user) {
+        if(req.params.id === req.session.user._id) {
+            return res.redirect('/perfil');
+        }
     }
+    
     const result = await Usuario.findById(req.params.id);
         res.status(200).render('visita-perfil', {
             usuario: req.session.user,
@@ -75,16 +77,17 @@ const cadastrar = async (req, res) => {
     try {
         hashedSenha = await bcrypt.hash(req.body.senha, salt);
     } catch(e) {
-        return; 
+        return res.status(500).send(e); 
     }
 
     const novoUsuario = new Usuario(Object.assign({}, req.body));
     novoUsuario.senha = hashedSenha;
 
     try {
-        usuario = novoUsuario.save().then(() => {
+        await novoUsuario.save().then(() => {
             res.status(201).redirect('/');
-        }).catch(e => {
+        })
+        .catch(e => {
             if (e.code === 11000) {
                 res.status(400).json({ "status": 400, "conteudo": "usuário já cadastrado" });
             }
