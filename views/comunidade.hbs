@@ -1,0 +1,15 @@
+<div class="container-sobre">
+
+    {{#if usuarios}}
+        {{#each usuarios}}
+            <div class="card mb-3" style="margin-top:20px;">
+                <div class="card-body">
+                    <img src="{{this.urlImagemPerfil}}" class="rounded-circle perfil-foto">
+                    <a href="/perfil/{{this._id}}"<h5 class="card-title">{{this.nome}} {{this.sobrenome}}</h5>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <h2>Nenhum usuário cadastrado</h2>
+    {{/if}}
+</div>

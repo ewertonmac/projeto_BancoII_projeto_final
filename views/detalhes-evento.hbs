@@ -11,11 +11,11 @@
     <div class="card-body">
       <p class="card-text">
 
-        <p class="card-text">
-          Nome: {{evento.palestrante.nome}} {{evento.palestrante.sobrenome}}
-          <br> Email: {{evento.palestrante.email}}
-          <br> Minicurriculo: {{evento.palestrante.minicurriculo}}
-        </p>
+      <p class="card-text">
+        Nome: {{evento.palestrante.nome}} {{evento.palestrante.sobrenome}}
+        <br> Email: {{evento.palestrante.email}}
+        <br> Minicurriculo: {{evento.palestrante.minicurriculo}}
+      </p>
 
     </div>
     </p>
@@ -25,35 +25,35 @@
       Ouvintes
     </div>
     <div class="card-body">
-      <p class="card-text">
         {{#if ouvinte}}
-          {{#each ouvinte}}
-            <div class="card-body">
-              <p class="card-text">
-                <b>Nome:</b> {{this.nome}} {{this.sobrenome}}
-              <br>  <b>Email:</b> {{this.email}}
-              </p>
-              <hr>
-            </div>
-          {{/each}}
-        {{else}}
-          <p>Nenhum ouvinte registrado.</p>
-        {{/if}}
-      </div>
-      </p>
+          <p class="card-text">
+            {{#each ouvinte}}
+              <div class="card-body">
+                <p class="card-text">
+                  <b>Nome:</b> {{this.nome}} {{this.sobrenome}}
+                  <br> <b>Email:</b> {{this.email}}
+                </p>
+                <hr>
+              </div>
+          </p>
+      {{/each}}
+      {{else}}
+        <p>Nenhum ouvinte registrado.</p>
+      {{/if}}
+    </div>
   </div>
 
   <form action="/eventos/inscrever/{{evento._id}}" method="post">
     <input type="submit" value="Se inscrever" class="btn btn-primary mt-3">
   </form>
-
   {{#if autorizacaoEvento}}
     <div class="botao">
-       <a href="/atualizar/eventos/{{evento._id}}">
-         <button class="btn btn-primary" id="editar">Editar informações</button></a>
-    <form action="/deletar/eventos/{{evento._id}}" method="post">
-      <input type="submit" value="Excluir evento" class="btn btn-danger mt-3" id="excluir" >
+      <a href="/atualizar/eventos/{{evento._id}}">
+        <button class="btn btn-primary" id="editar">Editar informações</button>
+      </a>
+      <form action="/deletar/eventos/{{evento._id}}" method="post">
+        <input type="submit" value="Excluir evento" class="btn btn-danger mt-3" id="excluir">
+      </form>
     </div>
-    </form>
   {{/if}}
 </div>

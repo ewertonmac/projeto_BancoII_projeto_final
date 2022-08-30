@@ -1,9 +1,10 @@
 const Usuario = require('../model/usuario');
 const bcrypt = require('bcrypt');
+const neo4j = require('../database/neo4j');
 require('dotenv').config();
 
 const listar = (req, res) => {
-    Usuario.find()
+    Usuario.find().sort()
         .then(usuarios => {
             if (!usuarios) {
                 return res.status(404).json({
@@ -11,7 +12,10 @@ const listar = (req, res) => {
                     "conteudo": "Nenhum usuário encontrado"
                 });
             }
-            return res.status(200).send(usuarios);
+            return res.status(200).render('comunidade', {
+                usuario: req.session.user, 
+                usuarios: usuarios
+            });
         }).catch(err => {
             return res.status(500).json({
                 "status": 500,
@@ -20,21 +24,14 @@ const listar = (req, res) => {
         });
 }
 
-const listarPorId = (req, res) => {
-    Usuario.findById(req.params.id)
-        .then(usuario => {
-            if (!usuario) {
-                return res.status(404).json({
-                    "status": 404,
-                    "conteudo": "usuário não encontrado"
-                });
-            }
-            return res.status(200).send(usuario);
-        }).catch(err => {
-            return res.status(500).json({
-                "status": 500,
-                "conteudo": `${err.message}`
-            });
+const listarPorId = async (req, res) => {
+    if(req.params.id === req.session.user._id) {
+        return res.redirect('/perfil');
+    }
+    const result = await Usuario.findById(req.params.id);
+        res.status(200).render('visita-perfil', {
+            usuario: req.session.user,
+            usuarioLogado: result
         });
 }
 

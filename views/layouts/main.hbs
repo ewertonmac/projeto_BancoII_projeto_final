@@ -29,11 +29,16 @@
         <a class="nav-link" href="/eventos">Eventos acadêmicos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/sobre">Sobre</a>
+        <a class="nav-link" href="/comunidade">Comunidade</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/publicar">Publicar evento</a>
+        <a class="nav-link" href="/sobre">Sobre</a>
       </li>
+      {{#if usuario}}
+        <li class="nav-item">
+          <a class="nav-link" href="/publicar">Publicar evento</a>
+        </li>
+      {{/if}}
     </ul>
     <div class="d-flex">
       {{#if usuario }}
@@ -44,7 +49,7 @@
           </a>
 
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
+            <li><a class="dropdown-item" href="/perfil/">Perfil</a></li>
             <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
           </ul>
         </div>
