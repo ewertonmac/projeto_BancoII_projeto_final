@@ -1,26 +1,27 @@
-const Usuario = require('../model/usuario');
+const usuarioService = require("../service/usuarioService")
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
-const listar = (req, res) => {
-    Usuario.find().sort()
-        .then(usuarios => {
-            if (!usuarios) {
-                return res.status(404).json({
-                    "status": 404,
-                    "conteudo": "Nenhum usuário encontrado"
-                });
+const listar = async (req, res) => {
+    try {
+        const usuarios = await usuarioService.listar()
+        if (!usuarios) {
+            return res.status(404).json({
+                "status": 404,
+                "conteudo": "Nenhum usuário encontrado"
+            });
             }
             return res.status(200).render('comunidade', {
                 usuario: req.session.user, 
                 usuarios: usuarios
-            });
-        }).catch(err => {
-            return res.status(500).json({
-                "status": 500,
-                "conteudo": `${err.message}`
-            });
+            }
+        );        
+    } catch (error) {
+        return res.status(500).json({
+            "status": 500,
+            "conteudo": `${error.message}`
         });
+    }
 }
 
 const listarPorId = async (req, res) => {
@@ -30,68 +31,45 @@ const listarPorId = async (req, res) => {
         }
     }
     
-    const result = await Usuario.findById(req.params.id);
+    const result = await usuarioService.listarPorId(req.params.id)
         res.status(200).render('visita-perfil', {
             usuario: req.session.user,
             usuarioLogado: result
         });
 }
 
-// const listarPorEmail = (req, res) => {
-//     Usuario.findOne({
-//         email: req.params.email
-//     })
-//         .then(usuario => {
-//             if (!usuario) {
-//                 return res.status(404).json({
-//                     "status": 404,
-//                     "conteudo": "usuário não encontrado"
-//                 });
-//             }
-//             return res.status(200).send(usuario);
-//         }).catch(err => {
-//             return res.status(500).json({
-//                 "status": 500,
-//                 "conteudo": `${err.message}`
-//             });
-//         });
-// }
+/* const listarPorEmail = async (req, res) => {
+    try{
+        const usuario = await usuarioService.listarPorEmail(req.params.email)
+        if (!usuario) {
+            return res.status(404).json({
+                "status": 404,
+                "conteudo": "usuário não encontrado"
+            });
+        }
+        return res.status(200).send(usuario);
+
+    }catch(err){
+        return res.status(500).json({
+            "status": 500,
+            "conteudo": `${err.message}`
+        });        
+    }
+} */
 
 const cadastrar = async (req, res) => {
-    let usuario = null;
-    try {
-        usuario = Usuario.findOne({
-            email: req.body.email
-        });
-
-    } catch (erro) {
-        res.json({
-            mensagemErro: erro.message
-        });
-    }
-
-
-    const salt = await bcrypt.genSalt(10);
-    let hashedSenha;
+    const dados = Object.assign({}, req.body)
 
     try {
-        hashedSenha = await bcrypt.hash(req.body.senha, salt);
-    } catch(e) {
-        return res.status(500).send(e); 
-    }
-
-    const novoUsuario = new Usuario(Object.assign({}, req.body));
-    novoUsuario.senha = hashedSenha;
-
-    try {
-        await novoUsuario.save().then(() => {
+        const salt = await bcrypt.genSalt(10);
+        dados.senha = await bcrypt.hash(req.body.senha, salt);
+        const result = usuarioService.cadastrar(dados)
+        if(result){
             res.status(201).redirect('/');
-        })
-        .catch(e => {
-            if (e.code === 11000) {
-                res.status(400).json({ "status": 400, "conteudo": "usuário já cadastrado" });
-            }
-        });
+        }
+        else{
+            res.status(400).json({ "status": 400, "conteudo": "usuário já cadastrado" });
+        }
     } catch (e) {
         res.status(500).json({ "status": 500, "mensagem": e.message });
     };
@@ -100,25 +78,21 @@ const cadastrar = async (req, res) => {
 
 const login = async (req, res) => {
 
-    const usuario = await Usuario.findOne({
-        email: req.body.email
-    });
+    const usuario = await usuarioService.listarPorEmail(req.body.email)
 
     if (usuario === null) {
         res.status(401).json({mensagem: 'E-mail inválido!'});
     }
 
     try {
-        bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
-            if (err) {
+        bcrypt.compare(req.body.senha, usuario.senha, 
+            (err, result) => {
+                if (err) {
                 res.status(400).send('Não autorizado');
             }
             if (result) {
-                const user = usuario;
-
-                req.session.user = user;
+                req.session.user = usuario;
                 res.status(200).redirect('/');
-
             }
         });
     } catch (e) {
@@ -127,49 +101,38 @@ const login = async (req, res) => {
 
 }
 
-const atualizar = (req, res) => {
-    Usuario.findByIdAndUpdate(req.params.id, req.body, {
-        new: true
-    })
-        .then(usuario => {
-            if (!usuario) {
-                return res.status(404).json({
-                    "status": 404,
-                    "conteudo": "usuário não encontrado"
-                });
-            }
-            req.session.user = usuario;
-            return res.status(200).redirect('/perfil');
-        }).catch(err => {
-            return res.status(500).json({
-                "status": 500,
-                "conteudo": `${err.message}`
+const atualizar = async (req, res) => {
+    try{
+        const usuarioAtualizado = await usuarioService.atualizar(req.params.id, req.body)
+
+        if (!usuarioAtualizado) {
+            return res.status(404).json({
+                "status": 404,
+                "conteudo": "usuário não encontrado"
             });
+        }
+        req.session.user = usuarioAtualizado;
+        return res.status(200).redirect('/perfil');
+    }catch(err){
+        return res.status(500).json({
+            "status": 500,
+            "conteudo": `${err.message}`
         });
+    }
 }
 
-const deletar = (req, res) => {
+const deletar = async (req, res) => {
 
     try {
-        Usuario.deleteOne({
-            _id: req.params.id
-        })
-            .then(result => {
-                if (result.deletedCount === 0) {
-                    return res.status(404).json({
-                        "status": 404,
-                        "conteudo": "usuário não encontrado"
-                    });
-                }
-                req.session.destroy();
-                return res.status(200).redirect('/');
-            })
-            .catch(err => {
-                return res.status(500).json({
-                    "status": 500,
-                    "conteudo": `${err.message}`
-                });
-            })
+        const result = await usuarioService.deletar(req.params.id)
+        if(!result){
+            return res.status(404).json({
+                "status": 404,
+                "conteudo": "usuário não encontrado"
+            });
+        }
+        req.session.destroy();
+        return res.status(200).redirect('/');
     } catch(e) {
         return res.status(500).send(`<b>Error:</b> ${e.message}`);
     }
