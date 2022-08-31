@@ -35,47 +35,51 @@ const listarHome = (req, res) => {
 const listarPorId = async (req, res) => {
     try {
         const evento = await Evento.findById(req.params.id);
-        const ouvintes = evento.ouvintes.map((ouvinte) => {
-            return ouvinte;
-        })
-        let adminEvento; 
-        if(req.session.user) {
-            adminEvento = (evento.palestrante.id === req.session.user._id) ? true : false;
-        }
-        return res.status(200).render('detalhes-evento', {
-            usuario: req.session.user,
-            evento: evento,
-            ouvinte: ouvintes,
-            autorizacaoEvento: adminEvento
-        });
+        if(evento) {
+            const ouvintes = evento.ouvintes.map((ouvinte) => {
+                return ouvinte;
+            })
+            let adminEvento; 
+            if(req.session.user) {
+                adminEvento = (evento.palestrante.id === req.session.user._id) ? true : false;
+            }
+       
+            return res.status(200).render('detalhes-evento', {
+                usuario: req.session.user,
+                evento: evento,
+                ouvinte: ouvintes,
+                autorizacaoEvento: adminEvento
+            });
+        } 
+        return res.status(404).send({mensagem: 'Evento não encontrado!'});
     } catch(e) {
         res.status(500).send(`Error: ${e.message}`);
     }
 }
 
-const proximosEventos = (req, res) => {
-    Evento.find({ data: { $gte: new Date() } }).limit(req.params.quantidade).sort({ data: 1 })
-        .then(eventos => {
-            if (eventos.length === 0) {
-                return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
-            }
-            return res.status(200).send(eventos);
-        }).catch(err => {
-            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
-        });
-}
+// const proximosEventos = (req, res) => {
+//     Evento.find({ data: { $gte: new Date() } }).limit(req.params.quantidade).sort({ data: 1 })
+//         .then(eventos => {
+//             if (eventos.length === 0) {
+//                 return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
+//             }
+//             return res.status(200).send(eventos);
+//         }).catch(err => {
+//             return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+//         });
+// }
 
-const listarPorEmailPalestrante = (req, res) => {
-    Evento.find({ "palestrante.email": { $eq: req.params.email } })
-        .then(eventos => {
-            if (eventos.length === 0) {
-                return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
-            }
-            return res.status(200).send(eventos);
-        }).catch(err => {
-            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
-        });
-}
+// const listarPorEmailPalestrante = (req, res) => {
+//     Evento.find({ "palestrante.email": { $eq: req.params.email } })
+//         .then(eventos => {
+//             if (eventos.length === 0) {
+//                 return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
+//             }
+//             return res.status(200).send(eventos);
+//         }).catch(err => {
+//             return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+//         });
+// }
 
 const cadastrar = (req, res) => {
     const evento = new Evento(req.body);
@@ -176,10 +180,8 @@ const deletar = async (req, res) => {
 module.exports = {
     listar,
     listarHome,
-    proximosEventos,
     inscreverOuvinte,
     listarPorId,
-    listarPorEmailPalestrante,
     cadastrar,
     atualizar,
     atualizarEvento,

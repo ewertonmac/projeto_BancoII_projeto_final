@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const redisClient = require('./database/redis');
 let RedisStore = require("connect-redis")(session);
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDocs = require('swagger-jsdoc');
 require('dotenv').config();
 
 // importações dos routes
@@ -14,6 +16,7 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const autenticacaoRoutes = require('./routes/autenticacao');
 const paginasRoutes = require('./routes/paginasRoutes');
 const eventosRoutes = require('./routes/eventosRoutes');
+const swaggerJSDoc = require('swagger-jsdoc');
 
 // configurações
 
@@ -69,13 +72,47 @@ app.all(/eventos(\/)*(\w)*(\/*)(\w)*(\/*)(\w)*/, eventosRoutes);
 
 app.all('/usuario/*', usuarioRoutes);
 
+
+
+// documentação
+
+const swaggerDefinition = {
+    "openapi": "3.0.0",
+    "info": {
+        "title": "even4",
+        "version": "1.2.0",
+        "description": "Sistema de publicação de eventos acadêmicos online.",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3002",
+            "description": "Ambiente de desenvolvimento"
+        },
+        {
+            "url": "https://even4.herokuapp.com/",
+            "description": "Produção"
+        }
+    ]
+}
+
+const options = {
+    swaggerDefinition,
+    apis: ['./routes/eventosRoutes.js', './routes/paginasRoutes.js', './routes/autenticacao.js', './routes/usuarioRoutes.js']
+};
+
+const swaggerSpecs = swaggerJsDocs(options);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
 // Not Found
 
 app.use((req, res) => {
     res.status(400).send("Not Found");
 });
-
-
 
 // server
 

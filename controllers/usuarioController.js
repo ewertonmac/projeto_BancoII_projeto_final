@@ -37,25 +37,25 @@ const listarPorId = async (req, res) => {
         });
 }
 
-const listarPorEmail = (req, res) => {
-    Usuario.findOne({
-        email: req.params.email
-    })
-        .then(usuario => {
-            if (!usuario) {
-                return res.status(404).json({
-                    "status": 404,
-                    "conteudo": "usuário não encontrado"
-                });
-            }
-            return res.status(200).send(usuario);
-        }).catch(err => {
-            return res.status(500).json({
-                "status": 500,
-                "conteudo": `${err.message}`
-            });
-        });
-}
+// const listarPorEmail = (req, res) => {
+//     Usuario.findOne({
+//         email: req.params.email
+//     })
+//         .then(usuario => {
+//             if (!usuario) {
+//                 return res.status(404).json({
+//                     "status": 404,
+//                     "conteudo": "usuário não encontrado"
+//                 });
+//             }
+//             return res.status(200).send(usuario);
+//         }).catch(err => {
+//             return res.status(500).json({
+//                 "status": 500,
+//                 "conteudo": `${err.message}`
+//             });
+//         });
+// }
 
 const cadastrar = async (req, res) => {
     let usuario = null;
@@ -105,19 +105,18 @@ const login = async (req, res) => {
     });
 
     if (usuario === null) {
-        res.status(401).redirect('/auth/login');
+        res.status(401).json({mensagem: 'E-mail inválido!'});
     }
 
     try {
         bcrypt.compare(req.body.senha, usuario.senha, (err, result) => {
             if (err) {
-                res.status(401).send('Não autorizado');
+                res.status(400).send('Não autorizado');
             }
             if (result) {
                 const user = usuario;
 
                 req.session.user = user;
-
                 res.status(200).redirect('/');
 
             }
@@ -191,4 +190,4 @@ const logout = (req, res) => {
 }
 
 
-module.exports = { listar, listarPorId, listarPorEmail, cadastrar, login, atualizar, deletar, atualizarPerfil, logout }
+module.exports = { listar, listarPorId, cadastrar, login, atualizar, deletar, atualizarPerfil, logout }
