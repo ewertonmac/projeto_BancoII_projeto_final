@@ -47,13 +47,11 @@
     <input type="submit" value="Se inscrever" class="btn btn-primary mt-3">
   </form>
   {{#if autorizacaoEvento}}
-    <div class="botao">
       <a href="/atualizar/eventos/{{evento._id}}">
         <button class="btn btn-primary" id="editar">Editar informações</button>
       </a>
       <form action="/deletar/eventos/{{evento._id}}" method="post">
-        <input type="submit" value="Excluir evento" class="btn btn-danger mt-3" id="excluir">
+        <input type="submit" value="Excluir evento" class="btn btn-danger mt-2" id="excluir">
       </form>
-    </div>
   {{/if}}
 </div>

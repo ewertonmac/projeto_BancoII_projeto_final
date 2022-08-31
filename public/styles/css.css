@@ -143,17 +143,14 @@ h3, h4 {
 }
 
 #editar {
-    margin-left:60%;
+ 
+ margin-top:7px;
 
-    position: absolute;
-    top:53%;
+  
 }
 
 #excluir {
-    margin-left:73%;
- 
-    position: absolute;
-    top:52%;
+  
 }
 
 #cancelar{
