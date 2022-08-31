@@ -103,7 +103,38 @@ const eventoController = require('../controllers/eventoController');
  *         email:
  *           type: string
  *           description: E-mail do ouvinte.
- *           example: fernanda.brum@gmail.com      
+ *           example: fernanda.brum@gmail.com 
+ *     AtualizarEvento:
+ *       type: object
+ *       properties:
+ *         nome:
+ *           type: string
+ *           description: Nome do evento.
+ *           example: IV Sertão Comp
+ *         descricacao:
+ *           type: string
+ *           description: Descrição do evento.
+ *           example: Encontro de computação do sertão 2023.
+ *         data:
+ *           type: string
+ *           description: Data de ocorrência do evento.
+ *           example: 15/11/2023 
+ *         palestrante.minicurriculo:
+ *           type: string
+ *           description: Breve descrição acadêmica do palestrante do evento.
+ *           example: Professor de Redes de Computadores.
+ *         urlImagem:
+ *           type: string
+ *           description: URL da imagem do evento hospedada na internet (com extensão no final).
+ *           example: https://images.even3.com.br/MoXgn5yL_7k1SIZ59cOWPJCyIV8=/1100x440/smart/even3.blob.core.windows.net/banner/WhatsAppImage2021-06-03at16.21.05.5026e6601f1446faaeb6.jpeg
+ *         siteOficial:
+ *           type: string
+ *           description: URL do site oficial do evento.
+ *           example: http://www.sertaocomp.info
+ *         categoria:
+ *           type: string
+ *           description: Categoria do evento.
+ *           example: Desenvolvimento          
  */
 
 // routes
@@ -218,7 +249,7 @@ router.get('/atualizar/eventos/:id', auth, eventoController.atualizarEvento);
 
 /**
  * @swagger
- * /eventos/atualizar/{id}:
+ * /atualizar/eventos/{id}:
  *   post:
  *     parameters:
  *       - in: path
@@ -228,23 +259,43 @@ router.get('/atualizar/eventos/:id', auth, eventoController.atualizarEvento);
  *          required: true
  *     tags: 
  *      - Eventos
- *     summary: Cadastra um evento.
- *     description: Cadastra um evento no sistema. É necessário estar autenticado. 
+ *     summary: Atualiza as informações de um evento.
+ *     description: Atualiza as informações de um evento no sistema. É necessário estar autenticado e ser o usuário que publicou o evento. 
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CadastroEvento'          
+ *             $ref: '#/components/schemas/AtualizarEvento'          
  *     responses:
  *       201:
- *         description: Evento criado com sucesso!. 
+ *         description: Evento atualizado com sucesso!. 
  *       400:
- *         description: Falha no cadastro!
+ *         description: Falha na atualização!
  */
 
 router.post('/atualizar/eventos/:id', auth, eventoController.atualizar);
 
+/**
+ * @swagger
+ * /deletar/eventos/{id}:
+ *   post:
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *          type: string
+ *          required: true
+ *     tags: 
+ *      - Eventos
+ *     summary: Deleta um evento.
+ *     description: Deleta um evento no sistema. É necessário estar autenticado e ser o usuário que publicou o evento.       
+ *     responses:
+ *       200:
+ *         description: Evento deletado com sucesso!. 
+ *       404:
+ *         description: Evento não encontrado!
+ */
 
 router.post('/deletar/eventos/:id', auth, eventoController.deletar);
 
