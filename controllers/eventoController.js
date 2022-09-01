@@ -1,104 +1,78 @@
 const Evento = require('../model/evento');
+const eventoService = require("../service/eventoService")
 
 const listar = async (req, res) => {
-    
+
     try {
-        const result = await Evento.find({});
-        const eventos = result.map((evento) => {
-            return evento;
-        })
+        const eventos = await eventoService.listar();
         res.status(200).render('eventos', {
             usuario: req.session.user,
             evento: eventos
         });
-    }catch(e) {
+    } catch (e) {
         res.status(500).send(`Error: ${e.message}`);
     }
 
 }
 
-const listarHome = (req, res) => {
-    Evento.find().limit(3)
-        .then(eventos => {
-            if (!eventos) {
-                return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
-            }
-            return res.status(200).render('index', {
-                usuario: req.session.user,
-                evento: eventos,
-            });
-        }).catch(err => {
-            return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+const listarHome = async (req, res) => {
+    const eventos = await eventoService.ultimosEventos();
+
+    try {
+        if (!eventos) {
+            return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
+
+        }
+        return res.status(200).render('index', {
+            usuario: req.session.user,
+            evento: eventos,
         });
+    } catch (error) {
+        return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
+    }
 }
 
 const listarPorId = async (req, res) => {
     try {
-        const evento = await Evento.findById(req.params.id);
-        if(evento) {
-            const ouvintes = evento.ouvintes.map((ouvinte) => {
-                return ouvinte;
-            })
-            let adminEvento; 
-            if(req.session.user) {
+        const evento = await eventoService.listarPorId(req.params.id)
+        if (evento) {
+            const { ouvintes } = evento;
+            let adminEvento;
+            if (req.session.user) {
                 adminEvento = (evento.palestrante.id === req.session.user._id) ? true : false;
             }
-       
+
             return res.status(200).render('detalhes-evento', {
                 usuario: req.session.user,
                 evento: evento,
                 ouvinte: ouvintes,
                 autorizacaoEvento: adminEvento
             });
-        } 
-        return res.status(404).send({mensagem: 'Evento não encontrado!'});
-    } catch(e) {
+        }
+        return res.status(404).send({ mensagem: 'Evento não encontrado!' });
+    } catch (e) {
         res.status(500).send(`Error: ${e.message}`);
     }
 }
 
-// const proximosEventos = (req, res) => {
-//     Evento.find({ data: { $gte: new Date() } }).limit(req.params.quantidade).sort({ data: 1 })
-//         .then(eventos => {
-//             if (eventos.length === 0) {
-//                 return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
-//             }
-//             return res.status(200).send(eventos);
-//         }).catch(err => {
-//             return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
-//         });
-// }
-
-// const listarPorEmailPalestrante = (req, res) => {
-//     Evento.find({ "palestrante.email": { $eq: req.params.email } })
-//         .then(eventos => {
-//             if (eventos.length === 0) {
-//                 return res.status(404).json({ "status": 404, "conteudo": "Nenhum evento encontrado" });
-//             }
-//             return res.status(200).send(eventos);
-//         }).catch(err => {
-//             return res.status(500).json({ "status": 500, "conteudo": `${err.message}` });
-//         });
-// }
-
-const cadastrar = (req, res) => {
-    const evento = new Evento(req.body);
-    evento.palestrante = req.session.user;
-
-    if(evento.palestrante.minicurriculo === '') {
+const cadastrar = async (req, res) => {
+    if (req.session.minicurriculo === '') {
         return res.status(400).send('Preencha seu minicurriculo e outras informações no perfil primeiro!');
     }
 
-    evento.save()
-        .then(evento => {
+    try {
+        const result = await eventoService.cadastrar(req.session.user, req.body)
+        
+        if(result){
             return res.status(201).redirect('/');
-        }).catch(err => {
-            if (err.code === 11000) {
-                return res.status(400).json({ "status": 400, "conteudo": "evento já cadastrado" });
-            }
-            req.flash('error', `${err.message}`);
-            return res.status(500).redirect('/');
-        })
+        }
+
+        return res.status(400).json({ "status": 400, "conteudo": "evento já cadastrado" });
+        
+    } catch (error) {
+        req.flash('error', `${error.message}`);
+        return res.status(500).redirect('/');
+    }
 
 }
 
