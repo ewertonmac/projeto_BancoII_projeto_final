@@ -16,13 +16,17 @@ const ultimosEventos = async (limit) => {
     }
 }
 
-const listarPorId = async (id) => {
+const listarPorId = async (id, usuario) => {
     try {
-        if (id) {
-            return await repository.listarPorId(id);
+        if (id && usuario) {
+            const evento = await repository.listarPorId(id)
+            return {
+                evento,
+                adminEvento: evento.palestrante._id === usuario._id
+            }
         }
         else {
-            return false;
+            return { evento: false };
         }
     } catch (error) {
         throw new Error(error.message)
@@ -33,7 +37,7 @@ const cadastrar = async (palestrante, params) => {
     const dados = Object.assign({}, params)
     dados.palestrante = palestrante
 
-    const dadosValidos = Object.entries(dados).every((key,value) => value !== null && value !== '')
+    const dadosValidos = validaObjeto(dados)
 
     if (dadosValidos) {
         try {
@@ -47,9 +51,51 @@ const cadastrar = async (palestrante, params) => {
     }
 }
 
+const inscreverOuvinte = async (idEvento, usuario) => {
+    const usuarioValido = validaObjeto(usuario);
+
+    if (idEvento && usuarioValido) {
+        const evento = await repository.listarPorId(idEvento);
+        const { ouvintes } = evento;
+        if (evento && ouvintes.every(o => o.email !== usuario.email)) {
+            await repository.inscreverOuvinte(evento, usuario);
+            return true
+        }
+        return false
+    }
+
+    return false
+}
+
+const atualizar = async (idEvento, usuario, eventoAtualizar) => {
+    const { evento } = await listarPorId(idEvento, usuario);
+
+    if (evento && evento.palestrante._id === usuario._id) {
+        const result = await repository.atualizar(evento, eventoAtualizar)
+        return {
+            idEvento,
+            atualizado: result.modifiedCount
+        }
+    }
+
+    return {
+        atualizado: false
+    }
+}
+
+const deletar = async (idEvento, palestrante) => {
+    const { deletedCount } = await repository.deletar(idEvento, palestrante)
+    return deletedCount
+}
+
+const validaObjeto = (objeto) => Object.values(objeto).every(value => !!value)
+
 module.exports = {
     listar,
     ultimosEventos,
     listarPorId,
-    cadastrar
+    cadastrar,
+    inscreverOuvinte,
+    atualizar,
+    deletar
 };

@@ -14,11 +14,11 @@ const listarPorId = async (id) => {
 }
 
 const cadastrar = async (dados) => {
-    try{
+    try {
         const evento = new Evento(dados)
         await evento.save()
         return true
-    }catch(err){
+    } catch (err) {
         if (e.code === 11000) { // evento já cadastrado
             return false;
         }
@@ -28,9 +28,18 @@ const cadastrar = async (dados) => {
     }
 }
 
+const inscreverOuvinte = async (evento, ouvinte) => await evento.updateOne({ $push: { ouvintes: ouvinte } });
+
+const atualizar = async (evento, eventoAtualizar) => await evento.updateOne(eventoAtualizar, { new: false });
+
+const deletar = async (idEvento, idPalestrante) => await Evento.deleteOne({ $and: [{ _id: idEvento }, { "palestrante._id": idPalestrante }] });
+
 module.exports = {
     listar,
     ultimosEventos,
     listarPorId,
-    cadastrar
+    cadastrar,
+    inscreverOuvinte,
+    atualizar,
+    deletar
 };
