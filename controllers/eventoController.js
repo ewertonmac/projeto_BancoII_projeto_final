@@ -1,4 +1,3 @@
-const Evento = require('../model/evento');
 const eventoService = require("../service/eventoService")
 
 const listar = async (req, res) => {

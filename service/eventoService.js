@@ -1,4 +1,5 @@
 const repository = require('../repository/eventoRepository')
+const { validaObjeto } = require('../validators/requestValidator');
 
 const listar = async () => {
     try {
@@ -87,8 +88,6 @@ const deletar = async (idEvento, palestrante) => {
     const { deletedCount } = await repository.deletar(idEvento, palestrante)
     return deletedCount
 }
-
-const validaObjeto = (objeto) => Object.values(objeto).every(value => !!value)
 
 module.exports = {
     listar,

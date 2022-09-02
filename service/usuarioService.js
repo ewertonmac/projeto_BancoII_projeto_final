@@ -1,4 +1,5 @@
-const repository = require('../repository/usuarioRepository')
+const repository = require('../repository/usuarioRepository');
+const { validaObjeto } = require('../validators/requestValidator');
 
 const listar = async () => {
     try {
@@ -34,10 +35,11 @@ const listarPorEmail = async (email) => {
 
 const cadastrar = async (params) => {
     const { nome, sobrenome, email, senha, status } = params
+    const novoUsuario = Object.assign({}, { nome, sobrenome, email, senha, status })
 
-    if (nome && sobrenome && email && senha && status) {
+    if (validaObjeto(novoUsuario)) {
         try {
-            return await repository.cadastrar({ nome, sobrenome, email, senha, status })
+            return await repository.cadastrar(novoUsuario)
         } catch (error) {
             throw new Error(error.message)
         }
@@ -49,10 +51,15 @@ const cadastrar = async (params) => {
 }
 
 const atualizar = async (id, params) => {
-    try{
-        return await repository.atualizar(id, params)
-    }catch(error){
-        return null;
+
+    if(id && validaObjeto(params)){
+        try{
+            return await repository.atualizar(id, params)
+        }catch(error){
+            throw new Error(error.message);
+        }
+    }else{
+        return false
     }
 }
 
