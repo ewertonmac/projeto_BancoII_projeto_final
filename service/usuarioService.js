@@ -59,7 +59,7 @@ const atualizar = async (id, params) => {
             throw new Error(error.message);
         }
     }else{
-        return false
+        throw new Error("todos os dados devem ser informados")
     }
 }
 
