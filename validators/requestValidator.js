@@ -1,4 +1,4 @@
-const validaObjeto = (objeto) => Object.values(objeto).every(value => !!value)
+const validaObjeto = (objeto) => Object.keys(objeto).every(key => key != "__v" ? !!objeto[key] : true)
 
 module.exports = {
     validaObjeto
