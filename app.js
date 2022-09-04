@@ -16,6 +16,7 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const autenticacaoRoutes = require('./routes/autenticacao');
 const paginasRoutes = require('./routes/paginasRoutes');
 const eventosRoutes = require('./routes/eventosRoutes');
+const apiRoutes = require('./routes/api/api');
 const swaggerJSDoc = require('swagger-jsdoc');
 
 // configurações
@@ -72,7 +73,9 @@ app.all(/eventos(\/)*(\w)*(\/*)(\w)*(\/*)(\w)*/, eventosRoutes);
 
 app.all('/usuario/*', usuarioRoutes);
 
+// rotas da api
 
+app.all('/api/*', apiRoutes);
 
 // documentação
 
