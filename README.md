@@ -20,6 +20,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - Jest
 
 ### :arrow_forward: Como Executar o projeto
+Clone o projeto e
 Baixe as dependências do projeto
 ## -npm i
 
