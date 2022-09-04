@@ -30,6 +30,6 @@ describe("Operações com o usuário", () => {
             expect(error.message).toEqual("id não informado")
         }
 
-    })
+    });
 
 })

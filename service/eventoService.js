@@ -19,7 +19,7 @@ const ultimosEventos = async (limit) => {
 
 const listarPorId = async (id, usuario) => {
     try {
-        if (id && usuario) {
+        if (id && validaObjeto(usuario) ) {
             const evento = await repository.listarPorId(id)
             return {
                 evento,
@@ -63,9 +63,9 @@ const inscreverOuvinte = async (idEvento, usuario) => {
             return true
         }
         return false
+    }else{
+        throw new Error("todos os dados devem ser informados")
     }
-
-    return false
 }
 
 const atualizar = async (idEvento, usuario, eventoAtualizar) => {
