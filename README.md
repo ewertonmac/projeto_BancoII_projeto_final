@@ -27,7 +27,16 @@ Baixe as dependências do projeto
 Execute o projeto com o comando
 ## -npm run dev
 
-### :arrow_forward: Como Executar os Teste de Sistemas(OBS:Execute o comando em outra janela do terminal)
+
+### :test_tube: Como Executar os Teste unitários
+
+ ## - npm run unit
+
+### :test_tube: Como Executar os Teste de Integração
+
+ ## - npm run integration
+
+### :test_tube: Como Executar os Teste de Sistemas(OBS:Execute o comando npm run dev em outra janela do terminal)
 
  ## -npm run test-sis
 
