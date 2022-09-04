@@ -42,13 +42,17 @@ app.engine('.hbs', handlebars.engine({
 // outras configs
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 app.use(session({
     secret: process.env.token_key,
     resave: false,
     saveUninitialized: false,
-    store: new RedisStore({ client: redisClient }),
+    store: new RedisStore({
+        client: redisClient
+    }),
 }));
 app.use(flash());
 
@@ -90,8 +94,7 @@ const swaggerDefinition = {
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
-    "servers": [
-        {
+    "servers": [{
             "url": "http://localhost:3002",
             "description": "Ambiente de desenvolvimento"
         },
@@ -120,4 +123,3 @@ app.use((req, res) => {
 // server
 
 app.listen(port, () => console.log(`O servidor está rodando em  http://localhost:${port}`));
-

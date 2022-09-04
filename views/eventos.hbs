@@ -7,7 +7,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{this.nome}}</h5>
                     <p class="card-text">{{this.descricao}}</p>
-                    <a href="/eventos/{{this._id}}"><button class="btn btn-primary">Mais detalhes</button></a>
+                    <a href="/eventos/{{this._id}}">
+                    <button class="btn btn-primary" id="detalhes">Mais detalhes</button></a>
                 </div>
             </div>
         {{/each}}
