@@ -4,7 +4,8 @@
   "description": "Plataforma de divulgação e inscrição em eventos acadêmicos. ",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "integration": "jest ./_tests_/integration",
+    "unit": "jest ./_tests_/unit",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },

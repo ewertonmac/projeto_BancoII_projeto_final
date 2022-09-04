@@ -1,4 +1,4 @@
-const { validaObjeto } = require("./requestValidator")
+const { validaObjeto } = require("../../validators/requestValidator")
 
 describe("Request Validator suite", () => {
     test("Deve retornar true quando parametros válidos", () => {

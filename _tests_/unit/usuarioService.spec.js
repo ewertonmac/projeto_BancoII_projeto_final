@@ -1,7 +1,7 @@
-const usuarioService = require("./usuarioService")
-const repository = require("../repository/usuarioRepository")
+const usuarioService = require("../../service/usuarioService")
+const repository = require("../../repository/usuarioRepository")
 
-jest.mock("../repository/usuarioRepository", () => ({
+jest.mock("../../repository/usuarioRepository", () => ({
     listar: jest.fn(),
     listarPorId: jest.fn(),
     listarPorEmail: jest.fn(),
@@ -93,12 +93,7 @@ describe("Listar por email", () => {
         expect(result[0]).toEqual(usuarioRetorno)
     })
 
-<<<<<<< HEAD
-    test("Não deve listar usuário quando email informado inválido", async () => {
-
-=======
     test("Não deve listar usuário quando id informado inválido", async () => {
->>>>>>> 3a85b8f645078b133d59db448cb609427d27e8e0
         try {
             result = await usuarioService.listarPorEmail(null)
         } catch (error) {

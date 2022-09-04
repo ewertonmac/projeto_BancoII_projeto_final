@@ -1,7 +1,7 @@
-import eventoService from './eventoService'
-import repository from '../repository/eventoRepository'
+import eventoService from '../../service/eventoService'
+import repository from '../../repository/eventoRepository'
 
-jest.mock('../repository/eventoRepository', () => ({
+jest.mock('../../repository/eventoRepository', () => ({
     listarPorId: jest.fn(),
     cadastrar: jest.fn(),
     inscreverOuvinte: jest.fn()
