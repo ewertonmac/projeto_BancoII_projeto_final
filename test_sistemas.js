@@ -11,7 +11,9 @@ const puppeteer = require('puppeteer');
     await page.goto('http://localhost:3002/');
 
     //Fazendo cadastro do usuario
-    await page.click('[href="/auth/signup"]');
+    await Promise.all([page.click('[href="/auth/signup"]'), page.waitForNavigation({
+        waitUntil: 'networkidle2'
+    })])
 
     await page.type('#input-nome', 'Natan');
     await page.type('#input-sobrenome', 'Severo');
@@ -19,29 +21,33 @@ const puppeteer = require('puppeteer');
     await page.type('#input-senha', '123456');
     await page.type('#select-status', 'Estudante');
 
-    await page.click('[type="submit"]');
-
-    await page.waitForNavigation();
+    await Promise.all([page.click('[type="submit"]'), page.waitForNavigation({
+        waitUntil: 'networkidle2'
+    })])
     // - Acessa a página de login
-    await page.click('[href="/auth/login"]');
 
-    await page.waitForNavigation();
+    await Promise.all([page.click('[href="/auth/login"]'), page.waitForNavigation({
+        waitUntil: 'networkidle2'
+    })])
 
     //escreve o email e senha
     await page.type('#login-email', 'natanlinkpark@hotmail.com');
     await page.type('#senha', '123456');
 
     //-clica no botão de entrar
+
+    await Promise.all([page.click('[type="submit"]'), page.waitForNavigation({
+        waitUntil: 'networkidle2'
+    })])
+
+    await page.click('[href="#"]')
+
+    await Promise.all([page.click('[href="/perfil/"]'), page.waitForNavigation({
+        waitUntil: 'networkidle2'
+    })])
+
     await page.click('[type="submit"]');
 
-    await page.waitForNavigation();
-
-    await page.click('[href="#"]');
-
-    await page.click('[href="/perfil/"]');
-
-    await page.waitForNavigation();
-
-    await page.click('[type="submit"]');
-
+    await page.close()
+    await browser.close()
 })();
