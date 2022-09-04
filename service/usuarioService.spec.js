@@ -60,7 +60,7 @@ describe("Listar por email", () => {
 
     })
 
-    test("Não deve listar usuário quando id informado inválido", async () => {
+    test("Não deve listar usuário quando email informado inválido", async () => {
 
         try {
             await usuarioService.listarPorEmail(null)
