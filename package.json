@@ -4,6 +4,7 @@
   "description": "Plataforma de divulgação e inscrição em eventos acadêmicos. ",
   "main": "app.js",
   "scripts": {
+    "test-sis": "test_sistemas.js",
     "integration": "jest ./_tests_/integration",
     "unit": "jest ./_tests_/unit",
     "start": "node app.js",
@@ -32,6 +33,8 @@
     "mongo": "^0.1.0",
     "mongoose": "^6.5.2",
     "neo4j-driver": "^4.4.7",
+    "node-fetch": "^3.2.10",
+    "puppeteer": "^17.1.0",
     "redis": "^4.3.0",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0"
