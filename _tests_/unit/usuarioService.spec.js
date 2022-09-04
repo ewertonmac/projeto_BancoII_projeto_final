@@ -93,7 +93,7 @@ describe("Listar por email", () => {
         expect(result[0]).toEqual(usuarioRetorno)
     })
 
-    test("Não deve listar usuário quando id informado inválido", async () => {
+    test("Não deve listar usuário quando email informado for inválido", async () => {
         try {
             result = await usuarioService.listarPorEmail(null)
         } catch (error) {
